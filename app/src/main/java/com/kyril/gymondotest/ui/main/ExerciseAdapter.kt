@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.kyril.gymondotest.R
 import com.kyril.gymondotest.model.Exercise
+import com.kyril.gymondotest.ui.GlideApp
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.exercise_list_item.*
 
@@ -39,11 +40,19 @@ class ExerciseAdapter : ListAdapter<Exercise, ExerciseAdapter.ExerciseViewHolder
     class ExerciseViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView),
         LayoutContainer {
 
-        val context = containerView.context!!
+        private val context = containerView.context!!
 
         fun bind(exercise: Exercise?) {
 
+            GlideApp.with(context)
+                .load(R.drawable.ic_fitness)
+                .into(exerciseThumbnailImageView)
+
+            exerciseCategoryTextView?.text = exercise?.category
             exerciseNameTextView?.text = exercise?.name
+
+            exerciseMusclesTextView?.text = exercise?.muscles
+            exerciseEquipmentTextView?.text = exercise?.equipment
 
         }
 

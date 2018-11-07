@@ -11,7 +11,7 @@ interface MuscleDao {
     @Insert
     fun insertMuscles(muscles: List<Muscle>)
 
-    @Query("SELECT muscle.name FROM muscle WHERE muscle.id = :muscleId")
+    @Query("SELECT name FROM muscle WHERE id = :muscleId")
     fun getMuscleById(muscleId: Int): String
 
     @Query("SELECT COUNT(*) FROM muscle")

@@ -33,7 +33,6 @@ class MainActivity : AppCompatActivity() {
         adapter = ExerciseAdapter()
         exercisesRecyclerView.adapter = adapter
 
-
         viewModel.getExercises().observe(this, Observer { adapter.submitList(it) })
     }
 }
