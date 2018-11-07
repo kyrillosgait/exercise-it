@@ -20,6 +20,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     fun getExercises(): LiveData<List<Exercise>> {
 
+        if (database.imageDao().getImageRows() == 0) {
+            loadImages()
+        }
+
         if (database.categoryDao().getCategoryRows() == 0) {
             loadCategories()
         }
@@ -52,15 +56,15 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
                     for (exercise in results!!) {
 
+                        // Set image url
+                        val image_urls = database.imageDao().getImageById(exercise.id)
+                        exercise.imageUrls = image_urls.joinToString (", ")
+
                         // Set category
                         val category = database.categoryDao().getCategoryById(exercise.categoryId)
                         exercise.category = category
 
                         // Set muscles
-//                        if (exercise.muscleIds.isEmpty()) {
-//                            exercise.muscles = null
-//                        }
-
                         var muscles = mutableListOf<String>()
 
                         for (muscleId in exercise.muscleIds) {
@@ -151,6 +155,27 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 }
 
                 override fun onFailure(call: Call<EquipmentResponse>, t: Throwable) {
+                    Log.d("ViewModel - Error", t.toString())
+                }
+
+            })
+    }
+
+    private fun loadImages() {
+        Log.d("ViewModel", "Starting Images API Call...")
+
+        WgerService.create()
+            .getAllImages()
+            .enqueue(object : Callback<ImageResponse> {
+
+                override fun onResponse(call: Call<ImageResponse>, response: Response<ImageResponse>) {
+                    Log.d("ViewModel - Success", "Getting images...")
+                    val results = response.body()?.results
+
+                    myExecutor.execute { (database.imageDao().insertImages(results!!)) }
+                }
+
+                override fun onFailure(call: Call<ImageResponse>, t: Throwable) {
                     Log.d("ViewModel - Error", t.toString())
                 }
 

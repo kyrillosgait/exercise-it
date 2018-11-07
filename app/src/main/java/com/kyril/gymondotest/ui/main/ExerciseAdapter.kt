@@ -44,15 +44,37 @@ class ExerciseAdapter : ListAdapter<Exercise, ExerciseAdapter.ExerciseViewHolder
 
         fun bind(exercise: Exercise?) {
 
-            GlideApp.with(context)
-                .load(R.drawable.ic_fitness)
-                .into(exerciseThumbnailImageView)
+            if (exercise?.imageUrls!!.isNotEmpty()) {
 
-            exerciseCategoryTextView?.text = exercise?.category
-            exerciseNameTextView?.text = exercise?.name
+                GlideApp.with(context)
+                    .load(exercise.imageUrls!!.substringBefore(","))
+                    .into(exerciseThumbnailImageView)
+            } else {
+                GlideApp.with(context)
+                    .load(R.drawable.ic_fitness)
+                    .into(exerciseThumbnailImageView)
+            }
 
-            exerciseMusclesTextView?.text = exercise?.muscles
-            exerciseEquipmentTextView?.text = exercise?.equipment
+
+            exerciseCategoryTextView?.text = "Category: " + exercise?.category
+            if (exercise?.name != "") {
+                exerciseNameTextView?.text = "Name: " + exercise?.name
+            } else {
+                exerciseNameTextView?.text = "No name info"
+            }
+
+
+            if (exercise?.muscles != null) {
+                exerciseMusclesTextView?.text = "Muscles: " + exercise?.muscles
+            } else {
+                exerciseMusclesTextView?.text = "No muscles info"
+            }
+
+            if (exercise?.equipment != null) {
+                exerciseEquipmentTextView?.text = "Equipment: " + exercise?.equipment
+            } else {
+                exerciseEquipmentTextView?.text = "No equipment info"
+            }
 
         }
 

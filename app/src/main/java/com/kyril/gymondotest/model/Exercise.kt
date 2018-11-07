@@ -16,6 +16,7 @@ data class Exercise(
     @Expose @SerializedName("equipment") val equipmentIds: List<Int>,
     @Expose @SerializedName("muscles") val muscleIds: List<Int>,
     @Expose @SerializedName("muscles_secondary") val secondaryMuscleIds: List<Int>,
+    @ColumnInfo(name = "image_urls") var imageUrls: String?,
     @ColumnInfo(name = "category") var category: String?,
     @ColumnInfo(name = "equipment") var equipment: String?,
     @ColumnInfo(name = "muscles") var muscles: String?,

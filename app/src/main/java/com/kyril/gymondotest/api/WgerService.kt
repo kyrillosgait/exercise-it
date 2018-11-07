@@ -15,7 +15,7 @@ import retrofit2.http.Query
  */
 interface WgerService {
 
-    @GET("exercise/")
+    @GET("exercise/?limit=100")
     fun getExercises(
         @Query("page") page: Int
     ): Call<ExerciseResponse>
