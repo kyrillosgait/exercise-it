@@ -21,9 +21,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     val myExecutor: Executor = Executors.newSingleThreadExecutor()
     val database: AppDatabase = AppDatabase.getInstance(getApplication())
+//    var initDone: MutableLiveData<Int> = MutableLiveData()
 
-    fun getExercises(): LiveData<List<Exercise>> {
-
+    fun init() {
         if (database.imageDao().getImageRows() == 0) {
             loadImages()
         }
@@ -39,9 +39,10 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         if (database.equipmentDao().getEquipmentRows() == 0) {
             loadEquipment()
         }
+    }
 
+    fun getExercises(): LiveData<List<Exercise>> {
         loadExercises()
-
         return database.exerciseDao().getExercises()
     }
 

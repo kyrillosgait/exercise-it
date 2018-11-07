@@ -59,6 +59,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:maxLines="1"
+                    android:ellipsize="end"
                     android:text="@string/exercise_item_muscles_placeholder"/>
 
         </LinearLayout>

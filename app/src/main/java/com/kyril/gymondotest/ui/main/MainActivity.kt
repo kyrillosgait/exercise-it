@@ -2,12 +2,14 @@ package com.kyril.gymondotest.ui.main
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jakewharton.threetenabp.AndroidThreeTen
 import com.kyril.gymondotest.R
+import com.kyril.gymondotest.model.Exercise
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -22,6 +24,7 @@ class MainActivity : AppCompatActivity() {
 
         Log.d("MainActivity", "Setting up ViewModel")
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        viewModel.init()
 
         setUpRecyclerView()
     }
@@ -32,9 +35,13 @@ class MainActivity : AppCompatActivity() {
         val layoutManager = LinearLayoutManager(this)
         exercisesRecyclerView.layoutManager = layoutManager
 
-        adapter = ExerciseAdapter()
+        adapter = ExerciseAdapter { exercise : Exercise -> exerciseClicked(exercise) }
         exercisesRecyclerView.adapter = adapter
 
         viewModel.getExercises().observe(this, Observer { adapter.submitList(it) })
+    }
+
+    private fun exerciseClicked(exercise: Exercise) {
+        Toast.makeText(this, "Clicked: ${exercise.id}", Toast.LENGTH_LONG).show()
     }
 }

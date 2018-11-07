@@ -16,7 +16,8 @@ import kotlinx.android.synthetic.main.exercise_list_item.*
  * Using ListAdapter instead of RecyclerViewAdapter, added in support library 27.1.0
  */
 
-class ExerciseAdapter : ListAdapter<Exercise, ExerciseAdapter.ExerciseViewHolder>(ExerciseDiffCallback()) {
+class ExerciseAdapter(val clickListener: (Exercise) -> Unit) :
+    ListAdapter<Exercise, ExerciseAdapter.ExerciseViewHolder>(ExerciseDiffCallback()) {
 
     class ExerciseDiffCallback : DiffUtil.ItemCallback<Exercise>() {
         override fun areItemsTheSame(oldItem: Exercise, newItem: Exercise): Boolean {
@@ -34,7 +35,7 @@ class ExerciseAdapter : ListAdapter<Exercise, ExerciseAdapter.ExerciseViewHolder
     }
 
     override fun onBindViewHolder(holder: ExerciseViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), clickListener)
     }
 
     class ExerciseViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView),
@@ -42,7 +43,9 @@ class ExerciseAdapter : ListAdapter<Exercise, ExerciseAdapter.ExerciseViewHolder
 
         private val context = containerView.context!!
 
-        fun bind(exercise: Exercise?) {
+        fun bind(exercise: Exercise?, clickListener: (Exercise) -> Unit) {
+
+            containerView.setOnClickListener { clickListener(exercise!!)}
 
             if (exercise?.imageUrls!!.isNotEmpty()) {
 
