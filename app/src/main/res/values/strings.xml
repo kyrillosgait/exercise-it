@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Gymondo Test</string>
+    <string name="exercise_item_category_placeholder">Category: -</string>
+    <string name="exercise_item_name_placeholder">Name: -</string>
+    <string name="exercise_item_equipment_placeholder">Equipment: -</string>
+    <string name="exercise_item_muscles_placeholder">Muscles: -</string>
+    <string name="main_toolbar_title">Exercise List</string>
 </resources>
