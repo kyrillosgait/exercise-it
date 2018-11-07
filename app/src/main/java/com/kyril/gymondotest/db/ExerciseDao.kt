@@ -16,7 +16,7 @@ interface ExerciseDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertExercise(exercise: Exercise)
 
-    @Query("SELECT * FROM exercise")
+    @Query("SELECT * FROM exercise ORDER BY datetime(time_added)")
     fun getExercises(): LiveData<List<Exercise>>
 
 }

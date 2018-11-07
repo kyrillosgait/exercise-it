@@ -12,7 +12,7 @@ import com.kyril.gymondotest.model.*
     version = 1,
     exportSchema = false
 )
-@TypeConverters(IntListTypeConverter::class)
+@TypeConverters(IntListTypeConverter::class, TimeTypeConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun categoryDao(): CategoryDao

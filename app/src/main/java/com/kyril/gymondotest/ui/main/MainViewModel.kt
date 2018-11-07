@@ -7,11 +7,15 @@ import androidx.lifecycle.LiveData
 import com.kyril.gymondotest.api.*
 import com.kyril.gymondotest.db.AppDatabase
 import com.kyril.gymondotest.model.Exercise
+import org.threeten.bp.ZoneId
+import org.threeten.bp.ZoneOffset
+import org.threeten.bp.ZonedDateTime
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
+
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -85,6 +89,11 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                         if (equipment.isNotEmpty()) {
                             exercise.equipment = equipment.joinToString(", ")
                         }
+
+                        val localTime = ZonedDateTime.now(ZoneId.systemDefault())
+                        // Convert Local Time to UTC
+                        val utcTime = localTime.toOffsetDateTime().withOffsetSameInstant(ZoneOffset.UTC)
+                        exercise.timeInserted = utcTime
 
                         // Insert exercise in database
                         myExecutor.execute { database.exerciseDao().insertExercise(exercise) }

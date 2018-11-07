@@ -5,6 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
+import org.threeten.bp.OffsetDateTime
 
 @Entity(tableName = "exercise")
 data class Exercise(
@@ -20,5 +21,6 @@ data class Exercise(
     @ColumnInfo(name = "category") var category: String?,
     @ColumnInfo(name = "equipment") var equipment: String?,
     @ColumnInfo(name = "muscles") var muscles: String?,
-    @ColumnInfo(name = "muscles_secondary") var secondaryMuscles: String?
+    @ColumnInfo(name = "muscles_secondary") var secondaryMuscles: String?,
+    @ColumnInfo(name = "time_added") var timeInserted: OffsetDateTime? = null
 )

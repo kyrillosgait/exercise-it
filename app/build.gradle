@@ -70,19 +70,15 @@ dependencies {
     // Paging
     implementation "androidx.paging:paging-runtime-ktx:$pagingVersion"
 
-    // use -ktx for Kotlin
+    implementation 'com.jakewharton.threetenabp:threetenabp:1.1.1'
 
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
 
-    //implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
-
     // Room
     implementation "androidx.room:room-runtime:$roomVersion"
     kapt "androidx.room:room-compiler:$roomVersion"
-
-    //implementation "androidx.room:room-rxjava2:$roomVersion"
 
     // Testing
     testImplementation 'junit:junit:4.12'
