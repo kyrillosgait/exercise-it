@@ -6,9 +6,9 @@ import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "exercise")
 data class Exercise(
-    @PrimaryKey val id: Int,
-    val name: String,
-    val description: String,
+    @PrimaryKey @SerializedName("id") var id: Int,
+    @SerializedName("name") var name: String,
+    @SerializedName("description") var description: String,
     @SerializedName("category") val categoryId: Int,
     @SerializedName("equipment") val equipmentIds: List<Int>,
     @SerializedName("muscles") val muscleIds: List<Int>,

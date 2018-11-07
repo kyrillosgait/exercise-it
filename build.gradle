@@ -36,5 +36,5 @@ ext {
     okHttpVersion = '3.11.0'
     pagingVersion = '2.1.0-beta01'
     retrofitVersion = '2.4.0'
-    roomVersion = '2.0.0'
+    roomVersion = '2.1.0-alpha02'
 }
