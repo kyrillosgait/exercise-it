@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kyril.gymondotest.R
 import com.kyril.gymondotest.model.Exercise
 import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.exercise_list_item.*
 
 /**
  * Using ListAdapter instead of RecyclerViewAdapter, added in support library 27.1.0
@@ -42,8 +43,9 @@ class ExerciseAdapter : ListAdapter<Exercise, ExerciseAdapter.ExerciseViewHolder
 
         fun bind(exercise: Exercise?) {
 
-        }
+            exerciseNameTextView?.text = exercise?.name
 
+        }
 
     }
 }
