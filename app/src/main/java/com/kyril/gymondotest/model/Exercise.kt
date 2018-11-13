@@ -5,22 +5,22 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
-import org.threeten.bp.OffsetDateTime
 
 @Entity(tableName = "exercise")
 data class Exercise(
 
-    @PrimaryKey @Expose @SerializedName("id") var id: Int,
-    @Expose @SerializedName("name") var name: String,
-    @Expose @SerializedName("description") var description: String = "",
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "sort_id") var sortId: Int,
+    @Expose @SerializedName("id") var id: Int,
+    @Expose @SerializedName("name") var name: String?,
+    @Expose @SerializedName("description") var description: String?,
     @ColumnInfo(name = "category_id") @Expose @SerializedName("category") val categoryId: Int,
-    @Expose @SerializedName("equipment") val equipmentIds: List<Int>,
-    @Expose @SerializedName("muscles") val muscleIds: List<Int>,
-    @Expose @SerializedName("muscles_secondary") val secondaryMuscleIds: List<Int>,
+    @Expose @SerializedName("equipment") val equipmentIds: List<Int>?,
+    @Expose @SerializedName("muscles") val muscleIds: List<Int>?,
+    @Expose @SerializedName("muscles_secondary") val secondaryMuscleIds: List<Int>?,
     @ColumnInfo(name = "image_urls") var imageUrls: String?,
     @ColumnInfo(name = "category") var category: String?,
     @ColumnInfo(name = "equipment") var equipment: String?,
     @ColumnInfo(name = "muscles") var muscles: String?,
     @ColumnInfo(name = "muscles_secondary") var secondaryMuscles: String?,
-    @ColumnInfo(name = "time_added") var timeInserted: OffsetDateTime? = null
+    @ColumnInfo(name = "thumbnail_url") var thumbnailUrl: String? = null
 )

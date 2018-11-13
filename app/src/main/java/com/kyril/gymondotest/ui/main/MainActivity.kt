@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jakewharton.threetenabp.AndroidThreeTen
+import com.kyril.gymondotest.Injection
 import com.kyril.gymondotest.R
 import com.kyril.gymondotest.model.Exercise
 import kotlinx.android.synthetic.main.activity_main.*
@@ -23,10 +24,13 @@ class MainActivity : AppCompatActivity() {
         AndroidThreeTen.init(this)
 
         Log.d("MainActivity", "Setting up ViewModel")
-        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
-        viewModel.init()
+//        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, Injection.provideViewModelFactory(this))
+            .get(MainViewModel::class.java)
 
         setUpRecyclerView()
+
+        viewModel.searchRepo("yes")
     }
 
     private fun setUpRecyclerView() {
@@ -37,11 +41,18 @@ class MainActivity : AppCompatActivity() {
 
         adapter = ExerciseAdapter { exercise : Exercise -> exerciseClicked(exercise) }
         exercisesRecyclerView.adapter = adapter
+        exercisesRecyclerView.hasFixedSize()
 
-        viewModel.getExercises().observe(this, Observer { adapter.submitList(it) })
+        viewModel.getMyExercises().observe(this, Observer {
+            Log.d("MainActivity - List", it.toString())
+            adapter.submitList(it) })
+
+        viewModel.networkErrors.observe(this, Observer<String> {
+            Toast.makeText(this, "\uD83D\uDE28 Wooops $it", Toast.LENGTH_LONG).show()
+        })
     }
 
     private fun exerciseClicked(exercise: Exercise) {
-        Toast.makeText(this, "Clicked: ${exercise.id}", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "Clicked: ${exercise.sortId}", Toast.LENGTH_LONG).show()
     }
 }

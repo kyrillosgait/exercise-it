@@ -8,18 +8,14 @@ import androidx.room.TypeConverters
 import com.kyril.gymondotest.model.*
 
 @Database(
-    entities = [Category::class, Equipment::class, Exercise::class, Image::class, Muscle::class],
+    entities = [Category::class, Equipment::class, Exercise::class, Image::class, Muscle::class, Thumbnail::class],
     version = 1,
     exportSchema = false
 )
-@TypeConverters(IntListTypeConverter::class, TimeTypeConverter::class)
+@TypeConverters(IntListTypeConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
-    abstract fun categoryDao(): CategoryDao
-    abstract fun equipmentDao(): EquipmentDao
     abstract fun exerciseDao(): ExerciseDao
-    abstract fun imageDao(): ImageDao
-    abstract fun muscleDao(): MuscleDao
 
     companion object {
         private val lock = Any()
