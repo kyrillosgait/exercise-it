@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.jakewharton.threetenabp.AndroidThreeTen
 import com.kyril.gymondotest.Injection
 import com.kyril.gymondotest.R
 import com.kyril.gymondotest.model.Exercise
@@ -21,8 +20,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        AndroidThreeTen.init(this)
+//        AndroidThreeTen.init(this)
 
+        setUpToolbar()
         Log.d("MainActivity", "Setting up ViewModel")
 //        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         viewModel = ViewModelProviders.of(this, Injection.provideViewModelFactory(this))
@@ -31,6 +31,12 @@ class MainActivity : AppCompatActivity() {
         setUpRecyclerView()
 
         viewModel.init("yes")
+    }
+
+    private fun setUpToolbar() {
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        toolbarTitleTextView?.setText(R.string.main_toolbar_title)
     }
 
     private fun setUpRecyclerView() {
