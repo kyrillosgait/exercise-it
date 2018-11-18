@@ -1,6 +1,5 @@
 package com.kyril.gymondotest.ui.main
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -9,8 +8,9 @@ import androidx.paging.PagedList
 import com.kyril.gymondotest.data.WgerRepository
 import com.kyril.gymondotest.model.Exercise
 import com.kyril.gymondotest.model.ExerciseResult
+import org.jetbrains.anko.AnkoLogger
 
-class MainViewModel(private val repository: WgerRepository) : ViewModel() {
+class MainViewModel(private val repository: WgerRepository) : ViewModel(), AnkoLogger {
 
     private fun loadInitialData() {
         repository.getInitialData()
@@ -29,7 +29,7 @@ class MainViewModel(private val repository: WgerRepository) : ViewModel() {
     fun getMyExercises(): LiveData<PagedList<Exercise>> {
 
         val repoResult: LiveData<ExerciseResult> = Transformations.map(queryLiveData) {
-            Log.d("MainViewModel", "exerciseResult")
+//            debug(exerciseresult)
             repository.getExercises()
         }
 

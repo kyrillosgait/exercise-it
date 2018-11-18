@@ -6,4 +6,16 @@
     <string name="exercise_item_muscles_placeholder">Muscles: -</string>
     <string name="main_toolbar_title">Exercise List</string>
     <string name="no_muscles_info">No muscles info</string>
+    <string name="detail_language_image_view_content_description">Language flag</string>
+    <string name="detail_category_label">Category</string>
+    <string name="detail_name_label">Name</string>
+    <string name="detail_equipment_label">Equipment</string>
+    <string name="detail_muscles_label">Muscles</string>
+    <string name="detail_description_label">Description</string>
+    <string name="detail_no_name">No name info</string>
+    <string name="detail_no_category">No category info</string>
+    <string name="detail_no_equipment">No equipment info</string>
+    <string name="detail_no_muscles">No muscles info</string>
+    <string name="detail_no_description">No description available</string>
+    <string name="thumbnail_image_content_descrition">Exercise thumbnail</string>
 </resources>

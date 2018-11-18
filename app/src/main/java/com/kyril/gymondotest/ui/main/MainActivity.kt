@@ -1,7 +1,6 @@
 package com.kyril.gymondotest.ui.main
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -11,10 +10,9 @@ import com.kyril.gymondotest.R
 import com.kyril.gymondotest.model.Exercise
 import com.kyril.gymondotest.ui.detail.DetailActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import org.jetbrains.anko.intentFor
-import org.jetbrains.anko.singleTop
+import org.jetbrains.anko.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), AnkoLogger {
 
     private lateinit var adapter: ExerciseAdapter
     private lateinit var viewModel: MainViewModel
@@ -25,10 +23,10 @@ class MainActivity : AppCompatActivity() {
 //        AndroidThreeTen.init(this)
 
         setUpToolbar()
-        Log.d("MainActivity", "Setting up ViewModel")
+        debug("Setting up ViewModel")
 //        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         viewModel = ViewModelProviders.of(this, Injection.provideViewModelFactory(this))
-            .get(MainViewModel::class.java)
+                .get(MainViewModel::class.java)
 
         setUpRecyclerView()
 
@@ -42,22 +40,24 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpRecyclerView() {
-        Log.d("MainActivity", "Configuring RecyclerView")
+        debug("Configuring RecyclerView")
 
         val layoutManager = LinearLayoutManager(this)
         exercisesRecyclerView.layoutManager = layoutManager
 
-        adapter = ExerciseAdapter { exercise : Exercise -> exerciseClicked(exercise) }
+        adapter = ExerciseAdapter { exercise: Exercise -> exerciseClicked(exercise) }
         exercisesRecyclerView.adapter = adapter
         exercisesRecyclerView.hasFixedSize()
 
         viewModel.exercises.observe(this, Observer {
-            Log.d("MainActivity - List", it.toString())
-            adapter.submitList(it) })
+            debug(it)
+            adapter.submitList(it)
+        })
 
-//        viewModel.networkErrors.observe(this, Observer<String> {
-//            Toast.makeText(this, "\uD83D\uDE28 Wooops $it", Toast.LENGTH_LONG).show()
-//        })
+        viewModel.networkErrors.observe(this, Observer<String> {
+            //            Toast.makeText(this, "\uD83D\uDE28 Wooops $it", Toast.LENGTH_LONG).show()
+            toast(it)
+        })
     }
 
     private fun exerciseClicked(exercise: Exercise) {

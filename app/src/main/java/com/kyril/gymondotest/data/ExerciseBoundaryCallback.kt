@@ -1,6 +1,5 @@
 package com.kyril.gymondotest.data
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
@@ -8,14 +7,16 @@ import com.kyril.gymondotest.api.getExercises
 import com.kyril.gymondotest.api.getThumbnails
 import com.kyril.gymondotest.db.WgerLocalCache
 import com.kyril.gymondotest.model.Exercise
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.debug
 
 /**
  * This boundary callback gets notified when user reaches to the edges of the list for example when
  * the database cannot provide any more data.
  **/
 class ExerciseBoundaryCallback(
-    private val cache: WgerLocalCache
-) : PagedList.BoundaryCallback<Exercise>() {
+        private val cache: WgerLocalCache
+) : PagedList.BoundaryCallback<Exercise>(), AnkoLogger {
 
     companion object {
         const val NETWORK_PAGE_SIZE = 20
@@ -37,7 +38,7 @@ class ExerciseBoundaryCallback(
      * Database returned 0 items. We should query the backend for more items.
      */
     override fun onZeroItemsLoaded() {
-        Log.d("RepoBoundaryCallback", "onZeroItemsLoaded")
+        debug("onZeroItemsLoaded")
         requestAndSaveData()
     }
 
@@ -45,7 +46,7 @@ class ExerciseBoundaryCallback(
      * When all items in the database were loaded, we need to query the backend for more items.
      */
     override fun onItemAtEndLoaded(itemAtEnd: Exercise) {
-        Log.d("RepoBoundaryCallback", "onItemAtEndLoaded " + lastRequestedPage.toString())
+        debug("onItemAtEndLoaded $lastRequestedPage")
         requestAndSaveData()
     }
 

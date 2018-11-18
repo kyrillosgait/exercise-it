@@ -16,8 +16,8 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:adjustViewBounds="true"
-            android:contentDescription="TODO"
-            android:padding="18dp"
+            android:contentDescription="@string/thumbnail_image_content_descrition"
+            android:padding="16dp"
             android:scaleType="fitCenter"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1:1"
@@ -26,6 +26,7 @@
             tools:minHeight="48dp"
             tools:minWidth="48dp" />
 
+        <!--TODO: Replace basic linear layout-->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"

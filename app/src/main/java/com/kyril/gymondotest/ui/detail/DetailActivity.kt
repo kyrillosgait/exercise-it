@@ -3,15 +3,17 @@ package com.kyril.gymondotest.ui.detail
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.kyril.gymondotest.R
 import com.kyril.gymondotest.db.AppDatabase
 import com.kyril.gymondotest.model.Exercise
 import com.kyril.gymondotest.ui.GlideApp
 import kotlinx.android.synthetic.main.activity_detail.*
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.debug
+import org.jetbrains.anko.toast
 
-class DetailActivity : AppCompatActivity() {
+class DetailActivity : AppCompatActivity(), AnkoLogger {
 
     lateinit var exercise: Exercise
 
@@ -23,7 +25,7 @@ class DetailActivity : AppCompatActivity() {
 
         val sortId = intent!!.extras!!.getInt("sort_id")
         exercise = AppDatabase.getInstance(this).exerciseDao().getExerciseById(sortId)
-        Log.d("Exerxise is: ", exercise.toString())
+        debug(exercise)
 
         loadExerciseDetails(exercise)
     }
@@ -73,6 +75,7 @@ class DetailActivity : AppCompatActivity() {
             9 -> loadLanguageFlag(R.drawable.ic_czech)
             10 -> loadLanguageFlag(R.drawable.ic_swedish)
             11 -> loadLanguageFlag(R.drawable.ic_norwegian)
+            else -> toast("No language flag found")
         }
 
     }

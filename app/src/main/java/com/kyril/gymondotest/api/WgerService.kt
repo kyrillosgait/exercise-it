@@ -15,7 +15,6 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-
 // Call to get exercise list
 fun getExercises(
     page: Int,
