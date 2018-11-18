@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
-import com.kyril.gymondotest.api.WgerService
 import com.kyril.gymondotest.api.getExercises
 import com.kyril.gymondotest.api.getThumbnails
 import com.kyril.gymondotest.db.WgerLocalCache
@@ -15,12 +14,11 @@ import com.kyril.gymondotest.model.Exercise
  * the database cannot provide any more data.
  **/
 class ExerciseBoundaryCallback(
-    private val service: WgerService,
     private val cache: WgerLocalCache
 ) : PagedList.BoundaryCallback<Exercise>() {
 
     companion object {
-        private const val NETWORK_PAGE_SIZE = 20
+        const val NETWORK_PAGE_SIZE = 20
     }
 
     // keep the last requested page. When the request is successful, increment the page number.
@@ -58,9 +56,10 @@ class ExerciseBoundaryCallback(
 
         isRequestInProgress = true
 
-        getExercises(service, lastRequestedPage, NETWORK_PAGE_SIZE, { exercises ->
+        getExercises(lastRequestedPage, NETWORK_PAGE_SIZE, { exercises ->
 
             cache.insertExercises(exercises) {
+
                 getThumbnails(exercises, cache) {
                     lastRequestedPage++
                     isRequestInProgress = false

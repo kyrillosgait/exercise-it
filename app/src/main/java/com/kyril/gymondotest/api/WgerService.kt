@@ -15,16 +15,17 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
+
 // Call to get exercise list
 fun getExercises(
-    service: WgerService,
     page: Int,
     itemsPerPage: Int,
     onSuccess: (repos: List<Exercise>) -> Unit,
     onError: (error: String) -> Unit
 ) {
 
-    service.getExercises(page, itemsPerPage)
+    WgerService.create()
+        .getExercises(page, itemsPerPage)
         .enqueue(object : Callback<ExerciseResponse> {
 
             override fun onResponse(call: Call<ExerciseResponse>?, response: Response<ExerciseResponse>) {
@@ -48,14 +49,11 @@ fun getThumbnails(
     cache: WgerLocalCache,
     onCallFinished: () -> Unit
 ) {
-
     var i = 0
     fun forwardLoop() {
-
         if (i == exercises.size - 1) {
             return //loop is finished;
         }
-
         i++
 
         Log.d("WgerService", "Looking for thumbnails of exercise with id: " + exercises[i].id)
@@ -65,8 +63,7 @@ fun getThumbnails(
 
                 override fun onResponse(call: Call<ThumbnailResponse>, response: Response<ThumbnailResponse>) {
                     val thumbnail = response.body()?.thumbnail
-
-                    cache.updateExercise(exercises[i].id, thumbnail!!.url!!)
+                    cache.updateExercise(exercises[i].id, thumbnail?.url!!)
                     forwardLoop()
                 }
 
@@ -75,7 +72,6 @@ fun getThumbnails(
                     forwardLoop()
                 }
             })
-
     }
 
     forwardLoop()
@@ -93,14 +89,6 @@ interface WgerService {
         @Query("limit") itemsPerPage: Int
     ): Call<ExerciseResponse>
 
-    @GET("exerciseimage/")
-    fun getImagesForExercise(
-        @Query("exercise") exerciseId: Int
-    ): Call<ImageResponse>
-
-    @GET("exerciseimage/?limit=204")
-    fun getAllImages(): Call<ImageResponse>
-
     @GET("exercisecategory/")
     fun getAllCategories(): Call<CategoryResponse>
 
@@ -114,7 +102,6 @@ interface WgerService {
     fun getThumbnailById(
         @Path("id") exerciseId: Int
     ): Call<ThumbnailResponse>
-
 
     companion object {
         private const val BASE_URL = "https://wger.de/api/v2/"

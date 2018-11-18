@@ -12,33 +12,28 @@ import com.kyril.gymondotest.model.ExerciseResult
 
 class MainViewModel(private val repository: WgerRepository) : ViewModel() {
 
+    private fun loadInitialData() {
+        repository.getInitialData()
+    }
+
     private val queryLiveData = MutableLiveData<String>()
-    val repoResult: LiveData<ExerciseResult> = Transformations.map(queryLiveData) {
-        Log.d("MainViewModel", "repoResult")
-        repository.getExercises()
-    }
+    val exerciseResult: LiveData<ExerciseResult> = Transformations.map(queryLiveData) { repository.getExercises() }
+    val exercises: LiveData<PagedList<Exercise>> = Transformations.switchMap(exerciseResult) { it -> it.data }
+    val networkErrors: LiveData<String> = Transformations.switchMap(exerciseResult) { it -> it.networkErrors }
 
-    val exercises: LiveData<PagedList<Exercise>> = Transformations.switchMap(repoResult) { it -> it.data }
-    val networkErrors: LiveData<String> = Transformations.switchMap(repoResult) { it ->
-        it.networkErrors
-    }
-
-    fun searchRepo(queryString: String) {
-        queryLiveData.postValue(queryString)
+    fun init(string: String) {
+        loadInitialData()
+        queryLiveData.postValue(string)
     }
 
     fun getMyExercises(): LiveData<PagedList<Exercise>> {
-        loadInitialData()
+
         val repoResult: LiveData<ExerciseResult> = Transformations.map(queryLiveData) {
-            Log.d("MainViewModel", "repoResult")
+            Log.d("MainViewModel", "exerciseResult")
             repository.getExercises()
         }
 
         return Transformations.switchMap(repoResult) { it -> it.data }
-
     }
 
-    private fun loadInitialData() {
-        repository.getInitialData()
-    }
 }

@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
 
         setUpRecyclerView()
 
-        viewModel.searchRepo("yes")
+        viewModel.init("yes")
     }
 
     private fun setUpRecyclerView() {
@@ -43,13 +43,13 @@ class MainActivity : AppCompatActivity() {
         exercisesRecyclerView.adapter = adapter
         exercisesRecyclerView.hasFixedSize()
 
-        viewModel.getMyExercises().observe(this, Observer {
+        viewModel.exercises.observe(this, Observer {
             Log.d("MainActivity - List", it.toString())
             adapter.submitList(it) })
 
-        viewModel.networkErrors.observe(this, Observer<String> {
-            Toast.makeText(this, "\uD83D\uDE28 Wooops $it", Toast.LENGTH_LONG).show()
-        })
+//        viewModel.networkErrors.observe(this, Observer<String> {
+//            Toast.makeText(this, "\uD83D\uDE28 Wooops $it", Toast.LENGTH_LONG).show()
+//        })
     }
 
     private fun exerciseClicked(exercise: Exercise) {

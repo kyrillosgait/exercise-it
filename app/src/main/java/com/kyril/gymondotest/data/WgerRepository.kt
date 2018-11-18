@@ -16,24 +16,22 @@ import retrofit2.Response
  * Repository class that works with local and remote data sources.
  */
 
+
 class WgerRepository(
     private val service: WgerService,
     private val cache: WgerLocalCache
 ) {
-
     /**
      * Get exercises
      */
     fun getExercises(): ExerciseResult {
         Log.d("WgerRepository", "Getting Exercises...")
 
-        // Get data source factory from the local cache
         val dataSourceFactory = cache.exercises()
 
-        // every new query creates a new BoundaryCallback
         // The BoundaryCallback will observe when the user reaches to the edges of
         // the list and update the database with extra data
-        val boundaryCallback = ExerciseBoundaryCallback(service, cache)
+        val boundaryCallback = ExerciseBoundaryCallback(cache)
         val networkErrors = boundaryCallback.networkErrors
 
         // Get the paged list
@@ -50,19 +48,9 @@ class WgerRepository(
     }
 
     fun getInitialData() {
-
-        if (cache.categories() == 0) {
-            getCategories()
-        }
-
-        if (cache.equipment() == 0) {
-            getEquipment()
-        }
-
-        if (cache.muscles() == 0) {
-            getMuscles()
-        }
-
+        if (cache.categories() == 0) { getCategories() }
+        if (cache.equipment() == 0) { getEquipment() }
+        if (cache.muscles() == 0) { getMuscles() }
     }
 
     private fun getCategories() {
@@ -74,7 +62,6 @@ class WgerRepository(
                 override fun onResponse(call: Call<CategoryResponse>, response: Response<CategoryResponse>) {
                     Log.d("WgerRepository - S", "Getting categories...")
                     val categories = response.body()?.results
-
                     cache.insertCategories(categories!!) {}
                 }
 
@@ -90,11 +77,9 @@ class WgerRepository(
         WgerService.create()
             .getAllMuscles()
             .enqueue(object : Callback<MuscleResponse> {
-
                 override fun onResponse(call: Call<MuscleResponse>, response: Response<MuscleResponse>) {
                     Log.d("WgerRepository - S", "Getting muscles...")
                     val muscles = response.body()?.results
-
                     cache.insertMuscles(muscles!!) {}
                 }
 
@@ -110,11 +95,9 @@ class WgerRepository(
         WgerService.create()
             .getAllEquipment()
             .enqueue(object : Callback<EquipmentResponse> {
-
                 override fun onResponse(call: Call<EquipmentResponse>, response: Response<EquipmentResponse>) {
                     Log.d("WgerRepository - S", "Getting equipment...")
                     val equipment = response.body()?.results
-
                     cache.insertEquipment(equipment!!) {}
                 }
 

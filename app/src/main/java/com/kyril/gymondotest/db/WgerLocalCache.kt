@@ -50,35 +50,34 @@ class WgerLocalCache(
 
         for (exercise in exercises) {
 
+            // Set category
+            val category = exerciseDao.getCategoryById(exercise.categoryId)
+            exercise.category = category
+
+            // Set muscles
+            var muscles = mutableListOf<String>()
+
+            for (muscleId in exercise.muscleIds!!) {
+                muscles.add(exerciseDao.getMuscleById(muscleId))
+            }
+
+            if (muscles.isNotEmpty()) {
+                exercise.muscles = muscles.joinToString(", ")
+            }
+
+            // Set muscles
+            var equipment = mutableListOf<String>()
+
+            for (equipmentId in exercise.equipmentIds!!) {
+                equipment.add(exerciseDao.getEquipmentById(equipmentId))
+            }
+
+            if (equipment.isNotEmpty()) {
+                exercise.equipment = equipment.joinToString(", ")
+            }
+
+            // Insert exercise in database
             ioExecutor.execute {
-
-                // Set category
-                val category = exerciseDao.getCategoryById(exercise.categoryId)
-                exercise.category = category
-
-                // Set muscles
-                var muscles = mutableListOf<String>()
-
-                for (muscleId in exercise.muscleIds!!) {
-                    muscles.add(exerciseDao.getMuscleById(muscleId))
-                }
-
-                if (muscles.isNotEmpty()) {
-                    exercise.muscles = muscles.joinToString(", ")
-                }
-
-                // Set muscles
-                var equipment = mutableListOf<String>()
-
-                for (equipmentId in exercise.equipmentIds!!) {
-                    equipment.add(exerciseDao.getEquipmentById(equipmentId))
-                }
-
-                if (equipment.isNotEmpty()) {
-                    exercise.equipment = equipment.joinToString(", ")
-                }
-
-                // Insert exercise in database
                 exerciseDao.insertExercise(exercise)
             }
         }
