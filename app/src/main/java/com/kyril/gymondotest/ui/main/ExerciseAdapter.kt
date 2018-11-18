@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.kyril.gymondotest.R
 import com.kyril.gymondotest.model.Exercise
 import com.kyril.gymondotest.ui.GlideApp
@@ -17,7 +18,7 @@ import kotlinx.android.synthetic.main.exercise_list_item.*
  */
 
 class ExerciseAdapter(private val clickListener: (Exercise) -> Unit) :
-    PagedListAdapter<Exercise, ExerciseAdapter.ExerciseViewHolder>(ExerciseDiffCallback()) {
+        PagedListAdapter<Exercise, ExerciseAdapter.ExerciseViewHolder>(ExerciseDiffCallback()) {
 
     class ExerciseDiffCallback : DiffUtil.ItemCallback<Exercise>() {
         override fun areItemsTheSame(oldItem: Exercise, newItem: Exercise): Boolean {
@@ -39,9 +40,12 @@ class ExerciseAdapter(private val clickListener: (Exercise) -> Unit) :
     }
 
     class ExerciseViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView),
-        LayoutContainer {
+            LayoutContainer {
 
         private val context = containerView.context!!
+
+        // Use Android's CircularProgressDrawable for placeholder when thumbnail is downloading
+        private val circularProgressDrawable = CircularProgressDrawable(context)
 
         fun bind(exercise: Exercise?, clickListener: (Exercise) -> Unit) {
 
@@ -55,14 +59,20 @@ class ExerciseAdapter(private val clickListener: (Exercise) -> Unit) :
 
                 // TODO: Placeholder while image is downloading.
                 if (exercise.thumbnailUrl != null) {
+
+                    circularProgressDrawable.strokeWidth = 5f
+                    circularProgressDrawable.centerRadius = 30f
+                    circularProgressDrawable.start()
+
                     GlideApp.with(context)
-                        .load(exercise.thumbnailUrl)
-                        .into(exerciseThumbnailImageView)
+                            .load(exercise.thumbnailUrl)
+                            .placeholder(circularProgressDrawable)
+                            .into(exerciseThumbnailImageView)
 
                 } else {
                     GlideApp.with(context)
-                        .load(R.drawable.ic_fitness)
-                        .into(exerciseThumbnailImageView)
+                            .load(R.drawable.ic_fitness)
+                            .into(exerciseThumbnailImageView)
                 }
 
                 exerciseCategoryTextView?.text = "Category: " + exercise.category

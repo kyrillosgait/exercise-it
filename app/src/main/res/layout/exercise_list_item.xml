@@ -39,13 +39,13 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/exerciseCategoryTextView"
+                android:id="@+id/exerciseNameTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="1" />
 
             <TextView
-                android:id="@+id/exerciseNameTextView"
+                android:id="@+id/exerciseCategoryTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="1" />
