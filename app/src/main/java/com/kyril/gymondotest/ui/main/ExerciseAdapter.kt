@@ -1,5 +1,6 @@
 package com.kyril.gymondotest.ui.main
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -47,19 +48,29 @@ class ExerciseAdapter(private val clickListener: (Exercise) -> Unit) :
         // Use Android's CircularProgressDrawable for placeholder when thumbnail is downloading
         private val circularProgressDrawable = CircularProgressDrawable(context)
 
-        fun bind(exercise: Exercise?, clickListener: (Exercise) -> Unit) {
+        private val noCategoryInfo = "No category info"
+        private val noNameInfo = "No name info"
+        private val noEquipmentInfo = "No equipment info"
+        private val noMusclesInfo = "No muscles info"
+        private val categoryLabel = "Category:"
+        private val nameLabel = "Name:"
+        private val equipmentLabel = "Equipment:"
+        private val musclesLabel = "Muscles:"
 
-            containerView.setOnClickListener {
-                if (exercise != null) {
-                    clickListener(exercise)
-                }
-            }
+        // TODO: Remove lint suppression
+        @SuppressLint("SetTextI18n")
+        fun bind(exercise: Exercise?, clickListener: (Exercise) -> Unit) {
 
             if (exercise != null) {
 
-                // TODO: Placeholder while image is downloading.
-                if (exercise.thumbnailUrl != null) {
+                containerView.setOnClickListener { clickListener(exercise) }
 
+                // Load image
+                if (exercise.thumbnailUrl.isNullOrBlank()) {
+                    GlideApp.with(context)
+                            .load(R.drawable.ic_fitness)
+                            .into(exerciseThumbnailImageView)
+                } else {
                     circularProgressDrawable.strokeWidth = 5f
                     circularProgressDrawable.centerRadius = 30f
                     circularProgressDrawable.start()
@@ -68,30 +79,34 @@ class ExerciseAdapter(private val clickListener: (Exercise) -> Unit) :
                             .load(exercise.thumbnailUrl)
                             .placeholder(circularProgressDrawable)
                             .into(exerciseThumbnailImageView)
-
-                } else {
-                    GlideApp.with(context)
-                            .load(R.drawable.ic_fitness)
-                            .into(exerciseThumbnailImageView)
                 }
 
-                exerciseCategoryTextView?.text = "Category: " + exercise.category
-                if (exercise.name != "") {
-                    exerciseNameTextView?.text = "Name: " + exercise.name
+                if (exercise.category.isNullOrBlank()) {
+                    exerciseCategoryTextView.text = noCategoryInfo
                 } else {
-                    exerciseNameTextView?.text = "No name info"
+                    val exerciseCategory = exercise.category
+                    exerciseCategoryTextView.text = "$categoryLabel $exerciseCategory"
                 }
 
-                if (exercise.muscles != null) {
-                    exerciseMusclesTextView?.text = "Muscles: " + exercise.muscles
+                if (exercise.name.isNullOrBlank()) {
+                    exerciseNameTextView.text = noNameInfo
                 } else {
-                    exerciseMusclesTextView?.text = "No muscles info"
+                    val exerciseName = exercise.name
+                    exerciseNameTextView.text = "$nameLabel $exerciseName"
                 }
 
-                if (exercise.equipment != null) {
-                    exerciseEquipmentTextView?.text = "Equipment: " + exercise.equipment
+                if (exercise.muscles.isNullOrBlank()) {
+                    exerciseMusclesTextView.text = noMusclesInfo
                 } else {
-                    exerciseEquipmentTextView?.text = "No equipment info"
+                    val exerciseMuscles = exercise.muscles
+                    exerciseMusclesTextView.text = "$musclesLabel $exerciseMuscles"
+                }
+
+                if (exercise.equipment.isNullOrBlank()) {
+                    exerciseEquipmentTextView.text = noEquipmentInfo
+                } else {
+                    val exerciseEquipment = exercise.equipment
+                    exerciseEquipmentTextView.text = "$equipmentLabel $exerciseEquipment"
                 }
             }
 

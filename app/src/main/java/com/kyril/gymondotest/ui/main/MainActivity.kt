@@ -2,7 +2,6 @@ package com.kyril.gymondotest.ui.main
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -10,7 +9,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.kyril.gymondotest.Injection
 import com.kyril.gymondotest.R
 import com.kyril.gymondotest.model.Exercise
+import com.kyril.gymondotest.ui.detail.DetailActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.intentFor
+import org.jetbrains.anko.singleTop
 
 class MainActivity : AppCompatActivity() {
 
@@ -59,6 +61,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun exerciseClicked(exercise: Exercise) {
-        Toast.makeText(this, "Clicked: ${exercise.sortId}", Toast.LENGTH_LONG).show()
+//        Toast.makeText(this, "Clicked: ${exercise.sortId}", Toast.LENGTH_LONG).show()
+        startActivity(intentFor<DetailActivity>("sort_id" to exercise.sortId).singleTop())
     }
 }

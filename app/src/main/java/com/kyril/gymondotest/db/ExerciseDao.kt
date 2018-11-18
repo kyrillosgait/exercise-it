@@ -26,6 +26,9 @@ interface ExerciseDao {
     @Query("SELECT COUNT(*) FROM exercise")
     fun getExerciseRows(): Int
 
+    @Query("SELECT * FROM exercise WHERE sort_id = :sortId")
+    fun getExerciseById(sortId: Int): Exercise
+
     @Query("SELECT * FROM exercise ORDER BY sort_id")
     fun exercises(): DataSource.Factory<Int, Exercise>
 
@@ -33,7 +36,7 @@ interface ExerciseDao {
     fun updateExerciseThumbnail(exerciseId: Int, thumbnailUrl: String)
 
     // Category
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertCategories(categories: List<Category>)
 
     @Query("SELECT name FROM category WHERE id = :categoryId")
@@ -44,7 +47,7 @@ interface ExerciseDao {
 
 
     // Muscles
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertMuscles(muscles: List<Muscle>)
 
     @Query("SELECT name FROM muscle WHERE id = :muscleId")
@@ -54,7 +57,7 @@ interface ExerciseDao {
     fun getMuscleRows(): Int
 
     // Equipment
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertEquipment(categories: List<Equipment>)
 
     @Query("SELECT name FROM equipment WHERE id = :equipmentId")
