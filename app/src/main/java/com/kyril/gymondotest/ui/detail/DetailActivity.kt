@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.kyril.gymondotest.R
 import com.kyril.gymondotest.db.AppDatabase
 import com.kyril.gymondotest.model.Exercise
+import com.kyril.gymondotest.ui.GlideApp
 import kotlinx.android.synthetic.main.activity_detail.*
 
 class DetailActivity : AppCompatActivity() {
@@ -59,6 +60,27 @@ class DetailActivity : AppCompatActivity() {
             }
         }
 
+        // Language icon
+        when (exercise.languageId) {
+            1 -> loadLanguageFlag(R.drawable.ic_german)
+            2 -> loadLanguageFlag(R.drawable.ic_english)
+            3 -> loadLanguageFlag(R.drawable.ic_bulgarian)
+            4 -> loadLanguageFlag(R.drawable.ic_spanish)
+            5 -> loadLanguageFlag(R.drawable.ic_russian)
+            6 -> loadLanguageFlag(R.drawable.ic_dutch)
+            7 -> loadLanguageFlag(R.drawable.ic_portuguese)
+            8 -> loadLanguageFlag(R.drawable.ic_greek)
+            9 -> loadLanguageFlag(R.drawable.ic_czech)
+            10 -> loadLanguageFlag(R.drawable.ic_swedish)
+            11 -> loadLanguageFlag(R.drawable.ic_norwegian)
+        }
+
+    }
+
+    private fun loadLanguageFlag(icon: Int) {
+        GlideApp.with(this)
+                .load(icon)
+                .into(exerciseLanguageImageView)
     }
 
 }
