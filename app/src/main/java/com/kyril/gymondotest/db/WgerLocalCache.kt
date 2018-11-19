@@ -16,35 +16,8 @@ class WgerLocalCache(
     private val ioExecutor: Executor
 ) {
 
-    fun insertCategories(categories: List<Category>, insertFinished: () -> Unit) {
-        ioExecutor.execute {
-            exerciseDao.insertCategories(categories)
-        }
-        insertFinished()
-    }
-
-    fun insertMuscles(muscles: List<Muscle>, insertFinished: () -> Unit) {
-        ioExecutor.execute {
-            exerciseDao.insertMuscles(muscles)
-        }
-        insertFinished()
-    }
-
-    fun insertEquipment(equipment: List<Equipment>, insertFinished: () -> Unit) {
-        ioExecutor.execute {
-            exerciseDao.insertEquipment(equipment)
-        }
-        insertFinished()
-    }
-
-    fun updateExercise(exerciseId: Int, thumbnailUrl: String) {
-        ioExecutor.execute {
-            exerciseDao.updateExerciseThumbnail(exerciseId, thumbnailUrl)
-        }
-    }
-
     /**
-     * Insert a list of exercises in the database, on a background thread.
+     * Inserts a list of exercises in the database, on a background thread.
      */
     fun insertExercises(exercises: List<Exercise>, insertFinished: () -> Unit) {
 
@@ -54,7 +27,7 @@ class WgerLocalCache(
             val category = exerciseDao.getCategoryById(exercise.categoryId)
             exercise.category = category
 
-            // Set muscles
+            // Set muscleRows
             var muscles = mutableListOf<String>()
 
             for (muscleId in exercise.muscleIds!!) {
@@ -65,7 +38,7 @@ class WgerLocalCache(
                 exercise.muscles = muscles.joinToString(", ")
             }
 
-            // Set muscles
+            // Set muscleRows
             var equipment = mutableListOf<String>()
 
             for (equipmentId in exercise.equipmentIds!!) {
@@ -85,6 +58,45 @@ class WgerLocalCache(
         insertFinished()
     }
 
+    /**
+     * Updates the thumbnail url field of the given exercise.
+     */
+    fun updateExercise(exerciseId: Int, thumbnailUrl: String) {
+        ioExecutor.execute {
+            exerciseDao.updateExerciseThumbnail(exerciseId, thumbnailUrl)
+        }
+    }
+
+    /**
+     * Function to insert categoryRows into the database.
+     */
+    fun insertCategories(categories: List<Category>, insertFinished: () -> Unit) {
+        ioExecutor.execute {
+            exerciseDao.insertCategories(categories)
+        }
+        insertFinished()
+    }
+
+    /**
+     * Function to insert muscleRows into the database.
+     */
+    fun insertMuscles(muscles: List<Muscle>, insertFinished: () -> Unit) {
+        ioExecutor.execute {
+            exerciseDao.insertMuscles(muscles)
+        }
+        insertFinished()
+    }
+
+    /**
+     * Function to insert equipmentRows into the database.
+     */
+    fun insertEquipment(equipment: List<Equipment>, insertFinished: () -> Unit) {
+        ioExecutor.execute {
+            exerciseDao.insertEquipment(equipment)
+        }
+        insertFinished()
+    }
+
     fun exercises(): DataSource.Factory<Int, Exercise> {
         return exerciseDao.exercises()
     }
@@ -93,15 +105,15 @@ class WgerLocalCache(
         return exerciseDao.getExerciseRows()
     }
 
-    fun categories(): Int {
+    fun categoryRows(): Int {
         return exerciseDao.getCategoryRows()
     }
 
-    fun muscles(): Int {
+    fun muscleRows(): Int {
         return exerciseDao.getMuscleRows()
     }
 
-    fun equipment(): Int {
+    fun equipmentRows(): Int {
         return exerciseDao.getEquipmentRows()
     }
 

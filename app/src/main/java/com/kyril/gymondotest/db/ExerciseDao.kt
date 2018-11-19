@@ -60,10 +60,10 @@ interface ExerciseDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertEquipment(categories: List<Equipment>)
 
-    @Query("SELECT name FROM equipment WHERE id = :equipmentId")
+    @Query("SELECT name FROM equipmentRows WHERE id = :equipmentId")
     fun getEquipmentById(equipmentId: Int): String
 
-    @Query("SELECT COUNT(*) FROM equipment")
+    @Query("SELECT COUNT(*) FROM equipmentRows")
     fun getEquipmentRows(): Int
 
 }

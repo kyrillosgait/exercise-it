@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.Expose
 
-@Entity(tableName = "equipment")
+@Entity(tableName = "equipmentRows")
 data class Equipment(
 
     @PrimaryKey @Expose val id: Int,

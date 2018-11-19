@@ -3,8 +3,6 @@ package com.kyril.gymondotest.data
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
-import com.kyril.gymondotest.api.getExercises
-import com.kyril.gymondotest.api.getThumbnails
 import com.kyril.gymondotest.db.WgerLocalCache
 import com.kyril.gymondotest.model.Exercise
 import org.jetbrains.anko.AnkoLogger
@@ -15,6 +13,7 @@ import org.jetbrains.anko.debug
  * the database cannot provide any more data.
  **/
 class ExerciseBoundaryCallback(
+        private val repository: WgerRepository,
         private val cache: WgerLocalCache
 ) : PagedList.BoundaryCallback<Exercise>(), AnkoLogger {
 
@@ -57,11 +56,11 @@ class ExerciseBoundaryCallback(
 
         isRequestInProgress = true
 
-        getExercises(lastRequestedPage, NETWORK_PAGE_SIZE, { exercises ->
+        repository.getExercisesFromNetwork(lastRequestedPage, NETWORK_PAGE_SIZE, { exercises ->
 
             cache.insertExercises(exercises) {
 
-                getThumbnails(exercises, cache) {
+                repository.getThumbnailsFromNetwork(exercises, cache) {
                     lastRequestedPage++
                     isRequestInProgress = false
                 }

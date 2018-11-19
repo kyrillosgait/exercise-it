@@ -14,14 +14,14 @@ data class Exercise(
     @Expose @SerializedName("name") var name: String?,
     @Expose @SerializedName("description") var description: String?,
     @ColumnInfo(name = "category_id") @Expose @SerializedName("category") val categoryId: Int,
-    @Expose @SerializedName("equipment") val equipmentIds: List<Int>?,
-    @Expose @SerializedName("muscles") val muscleIds: List<Int>?,
+    @Expose @SerializedName("equipmentRows") val equipmentIds: List<Int>?,
+    @Expose @SerializedName("muscleRows") val muscleIds: List<Int>?,
     @Expose @SerializedName("muscles_secondary") val secondaryMuscleIds: List<Int>?,
     @Expose @SerializedName("language") @ColumnInfo(name = "language_id") val languageId: Int,
     @ColumnInfo(name = "image_urls") var imageUrls: String?,
     @ColumnInfo(name = "category") var category: String?,
-    @ColumnInfo(name = "equipment") var equipment: String?,
-    @ColumnInfo(name = "muscles") var muscles: String?,
+    @ColumnInfo(name = "equipmentRows") var equipment: String?,
+    @ColumnInfo(name = "muscleRows") var muscles: String?,
     @ColumnInfo(name = "muscles_secondary") var secondaryMuscles: String?,
     @ColumnInfo(name = "thumbnail_url") var thumbnailUrl: String? = null
 )
