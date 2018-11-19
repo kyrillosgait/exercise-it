@@ -102,6 +102,11 @@ interface WgerService {
         @Path("id") exerciseId: Int
     ): Call<ThumbnailResponse>
 
+    @GET("exerciseimage/{exercise}")
+    fun getImagesById(
+            @Path("exercise") exerciseId: Int
+    ): Call<ImageResponse>
+
     companion object {
         private const val BASE_URL = "https://wger.de/api/v2/"
 

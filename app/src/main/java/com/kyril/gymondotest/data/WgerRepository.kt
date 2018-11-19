@@ -111,4 +111,21 @@ class WgerRepository(
                 })
     }
 
+    private fun getExerciseImagesById(exerciseId: Int) {
+
+        WgerService.create()
+                .getAllEquipment()
+                .enqueue(object : Callback<EquipmentResponse> {
+                    override fun onResponse(call: Call<EquipmentResponse>, response: Response<EquipmentResponse>) {
+                        debug("Getting equipment...")
+                        val equipment = response.body()?.results
+                        cache.insertEquipment(equipment!!) {}
+                    }
+
+                    override fun onFailure(call: Call<EquipmentResponse>, t: Throwable) {
+                        debug(t)
+                    }
+                })
+    }
+
 }

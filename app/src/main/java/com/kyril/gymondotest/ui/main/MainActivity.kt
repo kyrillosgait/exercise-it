@@ -20,11 +20,9 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-//        AndroidThreeTen.init(this)
 
         setUpToolbar()
         debug("Setting up ViewModel")
-//        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         viewModel = ViewModelProviders.of(this, Injection.provideViewModelFactory(this))
                 .get(MainViewModel::class.java)
 
@@ -54,10 +52,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
             adapter.submitList(it)
         })
 
-        viewModel.networkErrors.observe(this, Observer<String> {
-            //            Toast.makeText(this, "\uD83D\uDE28 Wooops $it", Toast.LENGTH_LONG).show()
-            toast(it)
-        })
+        viewModel.networkErrors.observe(this, Observer<String> { toast("\uD83D\uDE28 Wooops $it") })
     }
 
     private fun exerciseClicked(exercise: Exercise) {
