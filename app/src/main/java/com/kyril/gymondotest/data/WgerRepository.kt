@@ -68,7 +68,7 @@ class WgerRepository(
     fun getExercisesFromNetwork(
             page: Int,
             itemsPerPage: Int,
-            onSuccess: (repos: List<Exercise>) -> Unit,
+            onSuccess: (exercises: List<Exercise>) -> Unit,
             onError: (error: String) -> Unit
     ) {
 
@@ -79,6 +79,7 @@ class WgerRepository(
                     override fun onResponse(call: Call<ExerciseResponse>?, response: Response<ExerciseResponse>) {
                         if (response.isSuccessful) {
                             val exercises = response.body()?.results ?: emptyList()
+                            Log.d("THIS IS MY EXERCISES", exercises.toString())
                             onSuccess(exercises)
                         } else {
                             onError(response.errorBody()?.string() ?: "Unknown error")
@@ -184,7 +185,9 @@ class WgerRepository(
                     override fun onResponse(call: Call<EquipmentResponse>, response: Response<EquipmentResponse>) {
                         debug("Getting equipmentRows...")
                         val equipment = response.body()?.results
-                        cache.insertEquipment(equipment!!) {}
+                        if (equipment != null) {
+                            cache.insertEquipment(equipment) {}
+                        }
                     }
 
                     override fun onFailure(call: Call<EquipmentResponse>, t: Throwable) {

@@ -1,5 +1,6 @@
 package com.kyril.gymondotest.db
 
+import android.util.Log
 import androidx.paging.DataSource
 import com.kyril.gymondotest.model.Category
 import com.kyril.gymondotest.model.Equipment
@@ -19,39 +20,47 @@ class WgerLocalCache(
     /**
      * Inserts a list of exercises in the database, on a background thread.
      */
-    fun insertExercises(exercises: List<Exercise>, insertFinished: () -> Unit) {
+    fun insertExercises(exercises: List<Exercise>?, insertFinished: () -> Unit) {
 
-        for (exercise in exercises) {
+        if (exercises != null) {
+            for (exercise in exercises) {
+                Log.d("CACHE_EXERCISE", exercise.toString())
 
-            // Set category
-            val category = exerciseDao.getCategoryById(exercise.categoryId)
-            exercise.category = category
+                // Set category
+                val category = exerciseDao.getCategoryById(exercise.categoryId)
+                exercise.category = category
 
-            // Set muscleRows
-            var muscles = mutableListOf<String>()
+                // Set muscleRows
+                var muscles = mutableListOf<String>()
 
-            for (muscleId in exercise.muscleIds!!) {
-                muscles.add(exerciseDao.getMuscleById(muscleId))
-            }
+                if (exercise.muscleIds != null) {
+                    for (muscleId in exercise.muscleIds) {
+                        muscles.add(exerciseDao.getMuscleById(muscleId))
+                    }
+                }
 
-            if (muscles.isNotEmpty()) {
-                exercise.muscles = muscles.joinToString(", ")
-            }
+                if (muscles.isNotEmpty()) {
+                    exercise.muscles = muscles.joinToString(", ")
+                }
 
-            // Set muscleRows
-            var equipment = mutableListOf<String>()
+                // Set muscleRows
+                var equipment = mutableListOf<String>()
 
-            for (equipmentId in exercise.equipmentIds!!) {
-                equipment.add(exerciseDao.getEquipmentById(equipmentId))
-            }
+                if (exercise.equipmentIds != null) {
+                    for (equipmentId in exercise.equipmentIds!!) {
+                        equipment.add(exerciseDao.getEquipmentById(equipmentId))
+                    }
+                }
 
-            if (equipment.isNotEmpty()) {
-                exercise.equipment = equipment.joinToString(", ")
-            }
 
-            // Insert exercise in database
-            ioExecutor.execute {
-                exerciseDao.insertExercise(exercise)
+                if (equipment.isNotEmpty()) {
+                    exercise.equipment = equipment.joinToString(", ")
+                }
+
+                // Insert exercise in database
+                ioExecutor.execute {
+                    exerciseDao.insertExercise(exercise)
+                }
             }
         }
 
@@ -68,7 +77,7 @@ class WgerLocalCache(
     }
 
     /**
-     * Function to insert categoryRows into the database.
+     * Function to insert categories into the database.
      */
     fun insertCategories(categories: List<Category>, insertFinished: () -> Unit) {
         ioExecutor.execute {
@@ -78,7 +87,7 @@ class WgerLocalCache(
     }
 
     /**
-     * Function to insert muscleRows into the database.
+     * Function to insert muscles into the database.
      */
     fun insertMuscles(muscles: List<Muscle>, insertFinished: () -> Unit) {
         ioExecutor.execute {
@@ -88,7 +97,7 @@ class WgerLocalCache(
     }
 
     /**
-     * Function to insert equipmentRows into the database.
+     * Function to insert equipment into the database.
      */
     fun insertEquipment(equipment: List<Equipment>, insertFinished: () -> Unit) {
         ioExecutor.execute {

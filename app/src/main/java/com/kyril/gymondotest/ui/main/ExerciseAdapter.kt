@@ -50,8 +50,8 @@ class ExerciseAdapter(private val clickListener: (Exercise) -> Unit) :
 
         private val noCategoryInfo = "No category info"
         private val noNameInfo = "No name info"
-        private val noEquipmentInfo = "No equipmentRows info"
-        private val noMusclesInfo = "No muscleRows info"
+        private val noEquipmentInfo = "No equipment info"
+        private val noMusclesInfo = "No muscles info"
         private val categoryLabel = "Category:"
         private val nameLabel = "Name:"
         private val equipmentLabel = "Equipment:"
