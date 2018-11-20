@@ -17,7 +17,7 @@ class MainViewModel(private val repository: WgerRepository) : ViewModel(), AnkoL
     }
 
     private val queryLiveData = MutableLiveData<String>()
-    val exerciseResult: LiveData<ExerciseResult> = Transformations.map(queryLiveData) { repository.getExercises() }
+    private val exerciseResult: LiveData<ExerciseResult> = Transformations.map(queryLiveData) { repository.getExercises() }
     val exercises: LiveData<PagedList<Exercise>> = Transformations.switchMap(exerciseResult) { it -> it.data }
     val networkErrors: LiveData<String> = Transformations.switchMap(exerciseResult) { it -> it.networkErrors }
 

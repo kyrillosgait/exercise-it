@@ -12,7 +12,7 @@
     <string name="detail_no_equipment">No equipment info</string>
     <string name="detail_no_muscles">No muscles info</string>
     <string name="detail_no_description">No description available</string>
-    <string name="thumbnail_image_content_descrition">Exercise thumbnail</string>
+    <string name="thumbnail_image_content_description">Exercise thumbnail</string>
     <string name="detail_images_label">Images</string>
     <string name="exercise_image_content_description">Exercise image</string>
     <string name="detail_toolbar_title">Exercise details</string>

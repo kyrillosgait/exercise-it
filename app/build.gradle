@@ -37,21 +37,17 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     // Debug
-    debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'
+//    debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'
 
     // AndroidX
-    implementation "androidx.appcompat:appcompat:1.0.2"
+    implementation "androidx.appcompat:appcompat:$appCompatVersion"
+    implementation "androidx.cardview:cardview:$cardViewVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
+    implementation "androidx.recyclerview:recyclerview:$recyclerViewVersion"
 
     // Anko
     implementation "org.jetbrains.anko:anko-commons:$ankoVersion"
     implementation "org.jetbrains.anko:anko-design:$ankoVersion"
-
-    // CardView, RecyclerView
-    implementation "androidx.recyclerview:recyclerview:$androidXVersion"
-    implementation "androidx.cardview:cardview:$androidXVersion"
-
-    // ConstraintLayout
-    implementation "androidx.constraintlayout:constraintlayout:$constraintLayoutVersion"
 
     // Glide
     implementation "com.github.bumptech.glide:glide:$glideVersion"

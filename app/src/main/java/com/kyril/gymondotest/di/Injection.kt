@@ -18,7 +18,7 @@ import java.util.concurrent.Executors
 object Injection {
 
     /**
-     * Creates an instance of [GithubLocalCache] based on the database DAO.
+     * Creates an instance of [WgerLocalCache] based on the database DAO.
      */
     private fun provideCache(context: Context): WgerLocalCache {
         val database = AppDatabase.getInstance(context)
@@ -26,8 +26,8 @@ object Injection {
     }
 
     /**
-     * Creates an instance of [GithubRepository] based on the [GithubService] and a
-     * [GithubLocalCache]
+     * Creates an instance of [WgerRepository] based on the [WgerService] and a
+     * [WgerLocalCache]
      */
     private fun provideWgerRepository(context: Context): WgerRepository {
         return WgerRepository(WgerService.create(), provideCache(context))

@@ -57,7 +57,7 @@ class DetailActivity : AppCompatActivity() {
     private fun addFlagToActionBar(menu: Menu, languageFlag: Int) {
         menu.add(0, 0, 0, "Language")
                 .setIcon(languageFlag)
-                .setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS)
+                .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
     }
 
 

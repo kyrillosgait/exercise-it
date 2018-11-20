@@ -82,6 +82,8 @@ class WgerRepository(private val service: WgerService, private val cache: WgerLo
                 override fun onResponse(call: Call<ImageResponse>, response: Response<ImageResponse>) {
                     val images = response.body()?.images
                     cache.updateExerciseImages(exerciseId, images!!)
+
+                    // Get the first image in order to get the thumbnail
                     if (!images.isNullOrEmpty()) {
                         onSuccess(images[0].id!!)
                     }
