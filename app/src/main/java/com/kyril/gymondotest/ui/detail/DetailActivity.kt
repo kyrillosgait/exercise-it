@@ -3,6 +3,7 @@ package com.kyril.gymondotest.ui.detail
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kyril.gymondotest.R
@@ -46,7 +47,11 @@ class DetailActivity : AppCompatActivity() {
         adapter = ImageAdapter()
         exerciseImagesRecyclerView.adapter = adapter
 
-        adapter.submitList(exercise.images)
+        if (exercise.images.isNullOrEmpty()) {
+            exerciseNoImagesTextView.visibility = View.VISIBLE
+        } else {
+            adapter.submitList(exercise.images)
+        }
 
     }
 

@@ -16,4 +16,5 @@
     <string name="detail_images_label">Images</string>
     <string name="exercise_image_content_description">Exercise image</string>
     <string name="detail_toolbar_title">Exercise details</string>
+    <string name="detail_no_images">No images available</string>
 </resources>
