@@ -17,11 +17,13 @@
             android:theme="@style/ToolbarStyle">
 
             <TextView
-                android:id="@+id/toolbarTitleTextView"
+                android:id="@+id/detailToolbarTitleTextView"
                 style="@style/TextAppearance.Widget.AppCompat.Toolbar.Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:text="@string/detail_toolbar_title"
                 android:textColor="@android:color/black" />
 
