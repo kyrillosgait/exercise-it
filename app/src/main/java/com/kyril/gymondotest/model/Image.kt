@@ -8,7 +8,6 @@ import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "image")
 data class Image(
-
     @PrimaryKey @Expose val id: Int?,
     @ColumnInfo(name = "image_url") @Expose @SerializedName("image") val imageUrl: String?,
     @ColumnInfo(name = "exercise_id") @Expose @SerializedName("exercise") val exerciseId: Int?

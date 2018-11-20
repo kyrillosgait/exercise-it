@@ -17,6 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="192dp"
             android:adjustViewBounds="true"
+            android:contentDescription="@string/exercise_image_content_description"
             android:padding="16dp"
             tools:minHeight="96dp"
             tools:minWidth="192dp" />

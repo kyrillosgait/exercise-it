@@ -1,10 +1,11 @@
 package com.kyril.gymondotest.api
 
 import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
 import com.kyril.gymondotest.model.Category
 
 class CategoryResponse {
 
-    @Expose
-    var results: List<Category> = emptyList()
+    @Expose @SerializedName("results")
+    var categories: List<Category> = emptyList()
 }

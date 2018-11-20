@@ -6,7 +6,6 @@ import com.google.gson.annotations.Expose
 
 @Entity(tableName = "muscle")
 data class Muscle(
-
     @PrimaryKey @Expose val id: Int,
     @Expose val name: String
 )

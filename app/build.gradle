@@ -36,11 +36,15 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
+    // Debug
+//    debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'
+
     // AndroidX
     implementation "androidx.appcompat:appcompat:1.0.2"
 
     // Anko
     implementation "org.jetbrains.anko:anko-commons:$ankoVersion"
+    implementation "org.jetbrains.anko:anko-design:$ankoVersion"
 
     // CardView, RecyclerView
     implementation "androidx.recyclerview:recyclerview:$androidXVersion"
@@ -68,7 +72,6 @@ dependencies {
 
     // OkHttp - Logging Interceptor
     implementation "com.squareup.okhttp3:logging-interceptor:$okHttpVersion"
-    debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'
 
     // Paging
     implementation "androidx.paging:paging-runtime-ktx:$pagingVersion"

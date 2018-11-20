@@ -38,7 +38,6 @@ interface ExerciseDao {
     @Query("SELECT COUNT(*) FROM category")
     fun getCategoryRows(): Int
 
-
     // Muscles
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertMuscles(muscles: List<Muscle>)

@@ -10,9 +10,11 @@ import com.kyril.gymondotest.di.Injection
 import com.kyril.gymondotest.model.Exercise
 import com.kyril.gymondotest.ui.detail.DetailActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import org.jetbrains.anko.*
+import org.jetbrains.anko.design.longSnackbar
+import org.jetbrains.anko.intentFor
+import org.jetbrains.anko.singleTop
 
-class MainActivity : AppCompatActivity(), AnkoLogger {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var adapter: ExerciseAdapter
     private lateinit var viewModel: MainViewModel
@@ -22,9 +24,9 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
         setContentView(R.layout.activity_main)
 
         setUpToolbar()
-        debug("Setting up ViewModel")
+
         viewModel = ViewModelProviders.of(this, Injection.provideViewModelFactory(this))
-                .get(MainViewModel::class.java)
+            .get(MainViewModel::class.java)
 
         setUpRecyclerView()
 
@@ -38,7 +40,6 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
     }
 
     private fun setUpRecyclerView() {
-        debug("Configuring RecyclerView")
 
         val layoutManager = LinearLayoutManager(this)
         exercisesRecyclerView.layoutManager = layoutManager
@@ -48,15 +49,26 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
         exercisesRecyclerView.hasFixedSize()
 
         viewModel.exercises.observe(this, Observer {
-            debug(it)
             adapter.submitList(it)
         })
 
-        viewModel.networkErrors.observe(this, Observer<String> { toast("\uD83D\uDE28 Wooops $it") })
+        viewModel.networkErrors.observe(this, Observer<String> {
+            when (it) {
+                errorNoInternetConnection -> mainCoordinatorLayout.longSnackbar(
+                    "No internet connection.",
+                    "Retry"
+                ) { viewModel.init("retry") }
+                else -> mainCoordinatorLayout.longSnackbar("All exercises have been loaded.")
+            }
+        })
     }
 
     private fun exerciseClicked(exercise: Exercise) {
-//        Toast.makeText(this, "Clicked: ${exercise.sortId}", Toast.LENGTH_LONG).show()
         startActivity(intentFor<DetailActivity>("exercise_id" to exercise.id).singleTop())
     }
+
+    companion object {
+        const val errorNoInternetConnection = "Unable to resolve host \"wger.de\": No address associated with hostname"
+    }
+
 }

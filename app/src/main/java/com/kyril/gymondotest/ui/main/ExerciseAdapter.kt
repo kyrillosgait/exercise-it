@@ -18,8 +18,9 @@ import kotlinx.android.synthetic.main.exercise_list_item.*
  * Using ListAdapter instead of RecyclerViewAdapter, added in support library 27.1.0
  */
 
-class ExerciseAdapter(private val clickListener: (Exercise) -> Unit) :
-        PagedListAdapter<Exercise, ExerciseAdapter.ExerciseViewHolder>(ExerciseDiffCallback()) {
+class ExerciseAdapter(
+    private val clickListener: (Exercise) -> Unit
+) : PagedListAdapter<Exercise, ExerciseAdapter.ExerciseViewHolder>(ExerciseDiffCallback()) {
 
     class ExerciseDiffCallback : DiffUtil.ItemCallback<Exercise>() {
         override fun areItemsTheSame(oldItem: Exercise, newItem: Exercise): Boolean {
@@ -41,7 +42,7 @@ class ExerciseAdapter(private val clickListener: (Exercise) -> Unit) :
     }
 
     class ExerciseViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView),
-            LayoutContainer {
+        LayoutContainer {
 
         private val context = containerView.context!!
 
@@ -68,17 +69,17 @@ class ExerciseAdapter(private val clickListener: (Exercise) -> Unit) :
                 // Load image
                 if (exercise.thumbnailUrl.isNullOrBlank()) {
                     GlideApp.with(context)
-                            .load(R.drawable.ic_fitness)
-                            .into(exerciseThumbnailImageView)
+                        .load(R.drawable.ic_fitness)
+                        .into(exerciseThumbnailImageView)
                 } else {
                     circularProgressDrawable.strokeWidth = 5f
                     circularProgressDrawable.centerRadius = 30f
                     circularProgressDrawable.start()
 
                     GlideApp.with(context)
-                            .load(exercise.thumbnailUrl)
-                            .placeholder(circularProgressDrawable)
-                            .into(exerciseThumbnailImageView)
+                        .load(exercise.thumbnailUrl)
+                        .placeholder(circularProgressDrawable)
+                        .into(exerciseThumbnailImageView)
                 }
 
                 if (exercise.category.isNullOrBlank()) {

@@ -4,24 +4,19 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Html
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kyril.gymondotest.R
 import com.kyril.gymondotest.db.AppDatabase
-import com.kyril.gymondotest.di.Injection
 import com.kyril.gymondotest.model.Exercise
 import com.kyril.gymondotest.ui.GlideApp
 import kotlinx.android.synthetic.main.activity_detail.*
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.debug
 import org.jetbrains.anko.toast
 
 
-class DetailActivity : AppCompatActivity(), AnkoLogger {
+class DetailActivity : AppCompatActivity() {
 
     lateinit var exercise: Exercise
     private lateinit var adapter: ImageAdapter
-    private lateinit var viewModel: DetailViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,20 +26,11 @@ class DetailActivity : AppCompatActivity(), AnkoLogger {
 
         val exerciseId = intent!!.extras!!.getInt("exercise_id")
         exercise = AppDatabase.getInstance(this).exerciseDao().getExerciseById(exerciseId)
-        debug(exercise)
-
-        viewModel = ViewModelProviders.of(this, Injection.provideViewModelFactory(this))
-                .get(DetailViewModel::class.java)
 
         loadExerciseDetails(exercise)
 
         setUpRecyclerView()
 
-
-
-//        viewModel.getImagesForExercise(exerciseId).observe(this, Observer {
-//
-//        })
     }
 
     private fun setUpToolbar() {

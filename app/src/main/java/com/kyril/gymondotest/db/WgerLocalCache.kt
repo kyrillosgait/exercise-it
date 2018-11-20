@@ -1,6 +1,5 @@
 package com.kyril.gymondotest.db
 
-import android.util.Log
 import androidx.paging.DataSource
 import com.kyril.gymondotest.model.*
 import java.util.concurrent.Executor
@@ -9,20 +8,14 @@ import java.util.concurrent.Executor
  * Class that handles the DAO local data source. This ensures that methods are triggered on the
  * correct executor.
  */
-class WgerLocalCache(
-        private val exerciseDao: ExerciseDao,
-        private val ioExecutor: Executor
-) {
+class WgerLocalCache(private val exerciseDao: ExerciseDao, private val ioExecutor: Executor) {
 
     /**
      * Inserts a list of exercises in the database, on a background thread.
      */
-    fun insertExercises(exercises: List<Exercise>, insertFinished: (updatedExercises: List<Exercise>) -> Unit) {
+    fun insertExercises(exercises: List<Exercise>, insertFinished: () -> Unit) {
 
-        Log.d("WgerLocalCache", "EXERCISE_LIST_IS" + exercises.toString())
         for (exercise in exercises) {
-
-            Log.d("WgerLocalCache", "EXERCISE_IS" + exercise.toString())
 
             // Set category
             val category = exercise.categoryId.let { exerciseDao.getCategoryById(it!!) }
@@ -50,19 +43,17 @@ class WgerLocalCache(
                 exercise.equipment = equipment.joinToString(", ")
             }
 
-            Log.d("WgerLocalCache", "EXERCISE_IS_UPDATED" + exercise.toString())
-
             ioExecutor.execute {
                 exerciseDao.insertExercise(exercise)
             }
         }
 
-        insertFinished(exercises)
+        insertFinished()
     }
 
-    fun updateExerciseImages(exerciseId: Int, images: List<Image>?) {
+    fun updateExerciseImages(exerciseId: Int, images: List<Image>) {
         ioExecutor.execute {
-            images?.let { exerciseDao.updateExerciseImages(exerciseId, it) }
+            exerciseDao.updateExerciseImages(exerciseId, images)
         }
     }
 
@@ -78,31 +69,28 @@ class WgerLocalCache(
     /**
      * Function to insert categories into the database.
      */
-    fun insertCategories(categories: List<Category>, insertFinished: () -> Unit) {
+    fun insertCategories(categories: List<Category>) {
         ioExecutor.execute {
             exerciseDao.insertCategories(categories)
         }
-        insertFinished()
     }
 
     /**
      * Function to insert muscles into the database.
      */
-    fun insertMuscles(muscles: List<Muscle>, insertFinished: () -> Unit) {
+    fun insertMuscles(muscles: List<Muscle>) {
         ioExecutor.execute {
             exerciseDao.insertMuscles(muscles)
         }
-        insertFinished()
     }
 
     /**
      * Function to insert equipment into the database.
      */
-    fun insertEquipment(equipment: List<Equipment>, insertFinished: () -> Unit) {
+    fun insertEquipment(equipment: List<Equipment>) {
         ioExecutor.execute {
             exerciseDao.insertEquipment(equipment)
         }
-        insertFinished()
     }
 
     fun exercises(): DataSource.Factory<Int, Exercise> {

@@ -5,8 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
 import com.kyril.gymondotest.db.WgerLocalCache
 import com.kyril.gymondotest.model.Exercise
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.debug
 
 /**
  * This boundary callback gets notified when user reaches to the edges of the list for example when
@@ -15,7 +13,7 @@ import org.jetbrains.anko.debug
 class ExerciseBoundaryCallback(
     private val repository: WgerRepository,
     private val cache: WgerLocalCache
-) : PagedList.BoundaryCallback<Exercise>(), AnkoLogger {
+) : PagedList.BoundaryCallback<Exercise>() {
 
     companion object {
         const val NETWORK_PAGE_SIZE = 20
@@ -37,7 +35,6 @@ class ExerciseBoundaryCallback(
      * Database returned 0 items. We should query the backend for more items.
      */
     override fun onZeroItemsLoaded() {
-        debug("onZeroItemsLoaded")
         requestAndSaveData()
     }
 
@@ -45,12 +42,14 @@ class ExerciseBoundaryCallback(
      * When all items in the database were loaded, we need to query the backend for more items.
      */
     override fun onItemAtEndLoaded(itemAtEnd: Exercise) {
-        debug("onItemAtEndLoaded $lastRequestedPage")
         requestAndSaveData()
     }
 
-
-    // TODO: First download thumbnails, then insert exercises
+    /**
+     * This function first downloads the exercise list, then matches the exercise id's with the real
+     * category/muscle/equipment names and it inserts them one by one in the database. Then it makes
+     * a call to get the exercises' images and thumbnails.
+     */
     private fun requestAndSaveData() {
         if (isRequestInProgress) return
 
@@ -58,32 +57,10 @@ class ExerciseBoundaryCallback(
 
         repository.getExercisesFromNetwork(lastRequestedPage, { exercises ->
 
-            cache.insertExercises(exercises) { updatedExercises ->
-
-                repository.getImagesAndThumbnails(updatedExercises)
-//                for (exercise in updatedExercises) {
-//
-//                    repository.getImagesFromNetwork(exercise.id!!) { images ->
-//
-//                        Log.d("WgerRepository", "IMAGES_ARE" + images.toString())
-//
-//                        cache.updateExerciseImages(exercise.id, images) {
-//
-//                            exercise.images?.?.id?.let {
-//
-//                                repository.getThumbnailsFromNetwork(it) { thumbnailUrl ->
-//
-//                                    cache.updateExerciseThumbnail(exercise.id, thumbnailUrl)
-//
-//                                }
-//                            }
-//                        }
-//
-//                    }
-//                }
-
+            cache.insertExercises(exercises) {
                 lastRequestedPage++
                 isRequestInProgress = false
+                repository.getImagesAndThumbnails(exercises)
             }
 
         }, { error ->

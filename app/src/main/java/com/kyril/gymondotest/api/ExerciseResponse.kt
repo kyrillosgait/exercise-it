@@ -9,14 +9,7 @@ import com.kyril.gymondotest.model.Exercise
  */
 class ExerciseResponse {
 
-    @Expose
-    var results: List<Exercise> = emptyList()
+    @Expose @SerializedName("results")
+    var exercises: List<Exercise> = emptyList()
 
-    @SerializedName("next")
-    var nextPage: String? = null
-
-    @SerializedName("previous")
-    var previousPage: String? = null
-
-    var count: Int = 0
 }

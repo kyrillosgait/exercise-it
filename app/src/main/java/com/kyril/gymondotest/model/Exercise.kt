@@ -8,7 +8,6 @@ import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "exercise")
 data class Exercise(
-
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "sort_id") var sortId: Int,
     @Expose @SerializedName("id") val id: Int,
     @Expose @SerializedName("name") val name: String?,

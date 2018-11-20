@@ -26,14 +26,4 @@ class MainViewModel(private val repository: WgerRepository) : ViewModel(), AnkoL
         queryLiveData.postValue(string)
     }
 
-    fun getMyExercises(): LiveData<PagedList<Exercise>> {
-
-        val repoResult: LiveData<ExerciseResult> = Transformations.map(queryLiveData) {
-//            debug(exerciseresult)
-            repository.getExercises()
-        }
-
-        return Transformations.switchMap(repoResult) { it -> it.data }
-    }
-
 }

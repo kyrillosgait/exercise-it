@@ -6,8 +6,6 @@ import com.google.gson.annotations.Expose
 
 @Entity(tableName = "thumbnail")
 data class Thumbnail(
-
     @PrimaryKey(autoGenerate = true) var id: Int,
     @Expose val url: String
-
 )

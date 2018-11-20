@@ -1,5 +1,6 @@
 package com.kyril.gymondotest.ui.detail
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,8 +14,7 @@ import com.kyril.gymondotest.ui.GlideApp
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.exercise_image_list_item.*
 
-class ImageAdapter :
-        ListAdapter<Image, ImageAdapter.ImageViewHolder>(ExerciseDiffCallback()) {
+class ImageAdapter : ListAdapter<Image, ImageAdapter.ImageViewHolder>(ExerciseDiffCallback()) {
 
     class ExerciseDiffCallback : DiffUtil.ItemCallback<Image>() {
         override fun areItemsTheSame(oldItem: Image, newItem: Image): Boolean {
@@ -48,6 +48,7 @@ class ImageAdapter :
         private val stepLabel = "Step"
         var stepNumber = 0
 
+        @SuppressLint("SetTextI18n")
         fun bind(image: Image?) {
 
             circularProgressDrawable.strokeWidth = 5f

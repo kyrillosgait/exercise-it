@@ -20,15 +20,6 @@ interface WgerService {
             @Query("page") page: Int
     ): Call<ExerciseResponse>
 
-    @GET("exercisecategory/")
-    fun getAllCategories(): Call<CategoryResponse>
-
-    @GET("equipment/")
-    fun getAllEquipment(): Call<EquipmentResponse>
-
-    @GET("muscle/")
-    fun getAllMuscles(): Call<MuscleResponse>
-
     @GET("exerciseimage/{id}/thumbnails")
     fun getThumbnailById(
             @Path("id") exerciseId: Int
@@ -38,6 +29,15 @@ interface WgerService {
     fun getImagesById(
             @Query("exercise") exerciseId: Int
     ): Call<ImageResponse>
+
+    @GET("exercisecategory/")
+    fun getAllCategories(): Call<CategoryResponse>
+
+    @GET("equipment/")
+    fun getAllEquipment(): Call<EquipmentResponse>
+
+    @GET("muscle/")
+    fun getAllMuscles(): Call<MuscleResponse>
 
     companion object {
         private const val BASE_URL = "https://wger.de/api/v2/"
