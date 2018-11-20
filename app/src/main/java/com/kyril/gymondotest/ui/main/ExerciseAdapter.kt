@@ -24,7 +24,7 @@ class ExerciseAdapter(
 
     class ExerciseDiffCallback : DiffUtil.ItemCallback<Exercise>() {
         override fun areItemsTheSame(oldItem: Exercise, newItem: Exercise): Boolean {
-            return oldItem.id == newItem.id
+            return oldItem.sortId == newItem.sortId
         }
 
         override fun areContentsTheSame(oldItem: Exercise, newItem: Exercise): Boolean {

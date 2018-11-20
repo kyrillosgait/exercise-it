@@ -19,7 +19,7 @@ interface ExerciseDao {
     @Query("SELECT * FROM exercise WHERE id = :exerciseId")
     fun getExerciseById(exerciseId: Int): Exercise
 
-    @Query("SELECT * FROM exercise ORDER BY sort_id")
+    @Query("SELECT * FROM exercise")
     fun exercises(): DataSource.Factory<Int, Exercise>
 
     @Query("UPDATE exercise SET images = :images WHERE id = :exerciseId")

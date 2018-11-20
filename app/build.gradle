@@ -37,7 +37,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     // Debug
-//    debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'
+    debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'
 
     // AndroidX
     implementation "androidx.appcompat:appcompat:1.0.2"

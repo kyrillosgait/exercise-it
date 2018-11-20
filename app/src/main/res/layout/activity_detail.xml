@@ -148,6 +148,30 @@
                 app:layout_constraintTop_toBottomOf="@+id/exerciseMusclesLabelTextView" />
 
             <TextView
+                android:id="@+id/exerciseSecondaryMusclesLabelTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/detail_secondary_muscles_label"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/exerciseMusclesTextView" />
+
+            <TextView
+                android:id="@+id/exerciseSecondaryMusclesTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/detail_no_secondary_muscles"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/exerciseSecondaryMusclesLabelTextView" />
+
+            <TextView
                 android:id="@+id/exerciseDescriptionLabelTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -157,7 +181,7 @@
                 android:text="@string/detail_description_label"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/exerciseMusclesTextView" />
+                app:layout_constraintTop_toBottomOf="@id/exerciseSecondaryMusclesTextView" />
 
             <TextView
                 android:id="@+id/exerciseDescriptionTextView"

@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Gymondo Test</string>
-    <string name="main_toolbar_title">Exercise List</string>
+    <string name="main_toolbar_title">Exercises</string>
     <string name="detail_language_image_view_content_description">Language flag</string>
     <string name="detail_category_label">Category</string>
     <string name="detail_name_label">Name</string>
@@ -17,4 +17,6 @@
     <string name="exercise_image_content_description">Exercise image</string>
     <string name="detail_toolbar_title">Exercise details</string>
     <string name="detail_no_images">No images available</string>
+    <string name="detail_secondary_muscles_label">Secondary muscles</string>
+    <string name="detail_no_secondary_muscles">No secondary muscles info</string>
 </resources>

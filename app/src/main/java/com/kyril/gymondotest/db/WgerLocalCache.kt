@@ -11,7 +11,8 @@ import java.util.concurrent.Executor
 class WgerLocalCache(private val exerciseDao: ExerciseDao, private val ioExecutor: Executor) {
 
     /**
-     * Inserts a list of exercises in the database, on a background thread.
+     * First it matches the id's with the real names of category/muscles/secondary muscles/equipment.
+     * Then inserts a list of exercises in the database, on a background thread.
      */
     fun insertExercises(exercises: List<Exercise>, insertFinished: () -> Unit) {
 
@@ -21,7 +22,7 @@ class WgerLocalCache(private val exerciseDao: ExerciseDao, private val ioExecuto
             val category = exercise.categoryId.let { exerciseDao.getCategoryById(it!!) }
             exercise.category = category
 
-            // Set muscleRows
+            // Set muscles
             var muscles = mutableListOf<String>()
 
             for (muscleId in exercise.muscleIds!!) {
@@ -30,6 +31,17 @@ class WgerLocalCache(private val exerciseDao: ExerciseDao, private val ioExecuto
 
             if (muscles.isNotEmpty()) {
                 exercise.muscles = muscles.joinToString(", ")
+            }
+
+            // Set secondary muscles
+            var secondaryMuscles = mutableListOf<String>()
+
+            for (secondaryMuscleId in exercise.secondaryMuscleIds!!) {
+                muscles.add(exerciseDao.getMuscleById(secondaryMuscleId))
+            }
+
+            if (secondaryMuscles.isNotEmpty()) {
+                exercise.secondaryMuscles = secondaryMuscles.joinToString(", ")
             }
 
             // Set muscleRows

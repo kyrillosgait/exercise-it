@@ -36,7 +36,6 @@ class MainActivity : AppCompatActivity() {
     private fun setUpToolbar() {
         setSupportActionBar(mainToolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
-        toolbarTitleTextView?.setText(R.string.main_toolbar_title)
     }
 
     private fun setUpRecyclerView() {

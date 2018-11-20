@@ -99,6 +99,10 @@ class DetailActivity : AppCompatActivity() {
             exerciseMusclesTextView.text = exercise.muscles
         }
 
+        if (!exercise.secondaryMuscles.isNullOrBlank()) {
+            exerciseSecondaryMusclesTextView.text = exercise.secondaryMuscles
+        }
+
         if (!exercise.equipment.isNullOrBlank()) {
             exerciseEquipmentTextView.text = exercise.equipment
         }
@@ -110,7 +114,6 @@ class DetailActivity : AppCompatActivity() {
                 exerciseDescriptionTextView.text = Html.fromHtml(exercise.description)
             }
         }
-
     }
 
 }
