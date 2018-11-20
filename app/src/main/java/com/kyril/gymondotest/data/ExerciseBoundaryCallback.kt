@@ -13,8 +13,8 @@ import org.jetbrains.anko.debug
  * the database cannot provide any more data.
  **/
 class ExerciseBoundaryCallback(
-        private val repository: WgerRepository,
-        private val cache: WgerLocalCache
+    private val repository: WgerRepository,
+    private val cache: WgerLocalCache
 ) : PagedList.BoundaryCallback<Exercise>(), AnkoLogger {
 
     companion object {
@@ -56,14 +56,34 @@ class ExerciseBoundaryCallback(
 
         isRequestInProgress = true
 
-        repository.getExercisesFromNetwork(lastRequestedPage, NETWORK_PAGE_SIZE, { exercises ->
+        repository.getExercisesFromNetwork(lastRequestedPage, { exercises ->
 
-            cache.insertExercises(exercises) {
+            cache.insertExercises(exercises) { updatedExercises ->
 
-                repository.getThumbnailsFromNetwork(exercises, cache) {
-                    lastRequestedPage++
-                    isRequestInProgress = false
-                }
+                repository.getImagesAndThumbnails(updatedExercises)
+//                for (exercise in updatedExercises) {
+//
+//                    repository.getImagesFromNetwork(exercise.id!!) { images ->
+//
+//                        Log.d("WgerRepository", "IMAGES_ARE" + images.toString())
+//
+//                        cache.updateExerciseImages(exercise.id, images) {
+//
+//                            exercise.images?.?.id?.let {
+//
+//                                repository.getThumbnailsFromNetwork(it) { thumbnailUrl ->
+//
+//                                    cache.updateExerciseThumbnail(exercise.id, thumbnailUrl)
+//
+//                                }
+//                            }
+//                        }
+//
+//                    }
+//                }
+
+                lastRequestedPage++
+                isRequestInProgress = false
             }
 
         }, { error ->

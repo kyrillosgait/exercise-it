@@ -2,10 +2,7 @@ package com.kyril.gymondotest.db
 
 import android.util.Log
 import androidx.paging.DataSource
-import com.kyril.gymondotest.model.Category
-import com.kyril.gymondotest.model.Equipment
-import com.kyril.gymondotest.model.Exercise
-import com.kyril.gymondotest.model.Muscle
+import com.kyril.gymondotest.model.*
 import java.util.concurrent.Executor
 
 /**
@@ -13,64 +10,66 @@ import java.util.concurrent.Executor
  * correct executor.
  */
 class WgerLocalCache(
-    private val exerciseDao: ExerciseDao,
-    private val ioExecutor: Executor
+        private val exerciseDao: ExerciseDao,
+        private val ioExecutor: Executor
 ) {
 
     /**
      * Inserts a list of exercises in the database, on a background thread.
      */
-    fun insertExercises(exercises: List<Exercise>?, insertFinished: () -> Unit) {
+    fun insertExercises(exercises: List<Exercise>, insertFinished: (updatedExercises: List<Exercise>) -> Unit) {
 
-        if (exercises != null) {
-            for (exercise in exercises) {
-                Log.d("CACHE_EXERCISE", exercise.toString())
+        Log.d("WgerLocalCache", "EXERCISE_LIST_IS" + exercises.toString())
+        for (exercise in exercises) {
 
-                // Set category
-                val category = exerciseDao.getCategoryById(exercise.categoryId)
-                exercise.category = category
+            Log.d("WgerLocalCache", "EXERCISE_IS" + exercise.toString())
 
-                // Set muscleRows
-                var muscles = mutableListOf<String>()
+            // Set category
+            val category = exercise.categoryId.let { exerciseDao.getCategoryById(it!!) }
+            exercise.category = category
 
-                if (exercise.muscleIds != null) {
-                    for (muscleId in exercise.muscleIds) {
-                        muscles.add(exerciseDao.getMuscleById(muscleId))
-                    }
-                }
+            // Set muscleRows
+            var muscles = mutableListOf<String>()
 
-                if (muscles.isNotEmpty()) {
-                    exercise.muscles = muscles.joinToString(", ")
-                }
+            for (muscleId in exercise.muscleIds!!) {
+                muscles.add(exerciseDao.getMuscleById(muscleId))
+            }
 
-                // Set muscleRows
-                var equipment = mutableListOf<String>()
+            if (muscles.isNotEmpty()) {
+                exercise.muscles = muscles.joinToString(", ")
+            }
 
-                if (exercise.equipmentIds != null) {
-                    for (equipmentId in exercise.equipmentIds!!) {
-                        equipment.add(exerciseDao.getEquipmentById(equipmentId))
-                    }
-                }
+            // Set muscleRows
+            var equipment = mutableListOf<String>()
 
+            for (equipmentId in exercise.equipmentIds!!) {
+                equipment.add(exerciseDao.getEquipmentById(equipmentId))
+            }
 
-                if (equipment.isNotEmpty()) {
-                    exercise.equipment = equipment.joinToString(", ")
-                }
+            if (equipment.isNotEmpty()) {
+                exercise.equipment = equipment.joinToString(", ")
+            }
 
-                // Insert exercise in database
-                ioExecutor.execute {
-                    exerciseDao.insertExercise(exercise)
-                }
+            Log.d("WgerLocalCache", "EXERCISE_IS_UPDATED" + exercise.toString())
+
+            ioExecutor.execute {
+                exerciseDao.insertExercise(exercise)
             }
         }
 
-        insertFinished()
+        insertFinished(exercises)
+    }
+
+    fun updateExerciseImages(exerciseId: Int, images: List<Image>?) {
+        ioExecutor.execute {
+            images?.let { exerciseDao.updateExerciseImages(exerciseId, it) }
+        }
     }
 
     /**
      * Updates the thumbnail url field of the given exercise.
      */
-    fun updateExercise(exerciseId: Int, thumbnailUrl: String) {
+    fun updateExerciseThumbnail(exerciseId: Int, thumbnailUrl: String) {
         ioExecutor.execute {
             exerciseDao.updateExerciseThumbnail(exerciseId, thumbnailUrl)
         }
@@ -125,5 +124,4 @@ class WgerLocalCache(
     fun equipmentRows(): Int {
         return exerciseDao.getEquipmentRows()
     }
-
 }

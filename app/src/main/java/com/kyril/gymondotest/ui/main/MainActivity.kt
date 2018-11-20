@@ -5,8 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.kyril.gymondotest.Injection
 import com.kyril.gymondotest.R
+import com.kyril.gymondotest.di.Injection
 import com.kyril.gymondotest.model.Exercise
 import com.kyril.gymondotest.ui.detail.DetailActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
     }
 
     private fun setUpToolbar() {
-        setSupportActionBar(toolbar)
+        setSupportActionBar(mainToolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
         toolbarTitleTextView?.setText(R.string.main_toolbar_title)
     }
@@ -57,6 +57,6 @@ class MainActivity : AppCompatActivity(), AnkoLogger {
 
     private fun exerciseClicked(exercise: Exercise) {
 //        Toast.makeText(this, "Clicked: ${exercise.sortId}", Toast.LENGTH_LONG).show()
-        startActivity(intentFor<DetailActivity>("sort_id" to exercise.sortId).singleTop())
+        startActivity(intentFor<DetailActivity>("exercise_id" to exercise.id).singleTop())
     }
 }

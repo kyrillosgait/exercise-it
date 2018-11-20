@@ -1,4 +1,4 @@
-package com.kyril.gymondotest
+package com.kyril.gymondotest.di
 
 import android.content.Context
 import androidx.lifecycle.ViewModelProvider

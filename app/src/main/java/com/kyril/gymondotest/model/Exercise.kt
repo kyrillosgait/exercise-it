@@ -10,18 +10,18 @@ import com.google.gson.annotations.SerializedName
 data class Exercise(
 
     @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "sort_id") var sortId: Int,
-    @Expose @SerializedName("id") var id: Int,
-    @Expose @SerializedName("name") var name: String?,
-    @Expose @SerializedName("description") var description: String?,
-    @ColumnInfo(name = "category_id") @Expose @SerializedName("category") val categoryId: Int,
+    @Expose @SerializedName("id") val id: Int,
+    @Expose @SerializedName("name") val name: String?,
+    @Expose @SerializedName("description") val description: String?,
+    @Expose @SerializedName("category") val categoryId: Int?,
     @Expose @SerializedName("equipment") val equipmentIds: List<Int>?,
     @Expose @SerializedName("muscles") val muscleIds: List<Int>?,
     @Expose @SerializedName("muscles_secondary") val secondaryMuscleIds: List<Int>?,
-    @Expose @SerializedName("language") @ColumnInfo(name = "language_id") val languageId: Int,
-    @ColumnInfo(name = "image_urls") var imageUrls: String?,
+    @ColumnInfo(name = "language_id") @Expose @SerializedName("language") val languageId: Int?,
     @ColumnInfo(name = "category") var category: String?,
     @ColumnInfo(name = "equipment") var equipment: String?,
     @ColumnInfo(name = "muscles") var muscles: String?,
     @ColumnInfo(name = "muscles_secondary") var secondaryMuscles: String?,
-    @ColumnInfo(name = "thumbnail_url") var thumbnailUrl: String? = null
+    @ColumnInfo(name = "images") var images: List<Image>?,
+    @ColumnInfo(name = "thumbnail_url") var thumbnailUrl: String?
 )

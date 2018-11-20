@@ -73,8 +73,6 @@ dependencies {
     // Paging
     implementation "androidx.paging:paging-runtime-ktx:$pagingVersion"
 
-//    implementation 'com.jakewharton.threetenabp:threetenabp:1.1.1'
-
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
@@ -83,17 +81,6 @@ dependencies {
     // Room
     implementation "androidx.room:room-runtime:$roomVersion"
     kapt "androidx.room:room-compiler:$roomVersion"
-
-    // RxKotlin
-//    implementation "io.reactivex.rxjava2:rxandroid:$rxAndroidVersion"
-//    implementation "io.reactivex.rxjava2:rxkotlin:$rxKotlinVersion"
-
-//    implementation "com.google.dagger:dagger:2.16"
-//    implementation 'com.google.dagger:dagger-android:2.16'
-//    implementation 'com.google.dagger:dagger-android-support:2.16' // if you use the support libraries
-//    kapt "com.google.dagger:dagger-compiler:2.16"
-//    kapt 'com.google.dagger:dagger-android-processor:2.16'
-
 
     // Testing
     testImplementation 'junit:junit:4.12'

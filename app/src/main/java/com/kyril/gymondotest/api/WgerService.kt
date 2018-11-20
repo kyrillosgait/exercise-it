@@ -17,14 +17,13 @@ interface WgerService {
 
     @GET("exercise/")
     fun getExercises(
-            @Query("page") page: Int,
-            @Query("limit") itemsPerPage: Int
+            @Query("page") page: Int
     ): Call<ExerciseResponse>
 
     @GET("exercisecategory/")
     fun getAllCategories(): Call<CategoryResponse>
 
-    @GET("equipmentRows/")
+    @GET("equipment/")
     fun getAllEquipment(): Call<EquipmentResponse>
 
     @GET("muscle/")
@@ -35,9 +34,9 @@ interface WgerService {
             @Path("id") exerciseId: Int
     ): Call<ThumbnailResponse>
 
-    @GET("exerciseimage/{exercise}")
+    @GET("exerciseimage/")
     fun getImagesById(
-            @Path("exercise") exerciseId: Int
+            @Query("exercise") exerciseId: Int
     ): Call<ImageResponse>
 
     companion object {

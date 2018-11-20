@@ -1,6 +1,5 @@
 package com.kyril.gymondotest.data
 
-import android.util.Log
 import androidx.paging.LivePagedListBuilder
 import com.kyril.gymondotest.api.*
 import com.kyril.gymondotest.db.WgerLocalCache
@@ -67,19 +66,17 @@ class WgerRepository(
      */
     fun getExercisesFromNetwork(
             page: Int,
-            itemsPerPage: Int,
             onSuccess: (exercises: List<Exercise>) -> Unit,
             onError: (error: String) -> Unit
     ) {
 
         WgerService.create()
-                .getExercises(page, itemsPerPage)
+                .getExercises(page)
                 .enqueue(object : Callback<ExerciseResponse> {
 
                     override fun onResponse(call: Call<ExerciseResponse>?, response: Response<ExerciseResponse>) {
                         if (response.isSuccessful) {
                             val exercises = response.body()?.results ?: emptyList()
-                            Log.d("THIS IS MY EXERCISES", exercises.toString())
                             onSuccess(exercises)
                         } else {
                             onError(response.errorBody()?.string() ?: "Unknown error")
@@ -92,45 +89,57 @@ class WgerRepository(
                 })
     }
 
+
+    fun getImagesAndThumbnails(exercises: List<Exercise>) {
+
+        for (exercise in exercises) {
+            getImagesFromNetwork(exercise.id) {
+                getThumbnailsFromNetwork(exercise.id, it)
+            }
+
+        }
+    }
+
+    private fun getImagesFromNetwork(exerciseId: Int, onSuccess: (imageId: Int) -> Unit) {
+
+        WgerService.create()
+            .getImagesById(exerciseId)
+            .enqueue(object : Callback<ImageResponse> {
+
+                override fun onResponse(call: Call<ImageResponse>, response: Response<ImageResponse>) {
+                    val images = response.body()?.images
+                    cache.updateExerciseImages(exerciseId, images)
+                    if (!images.isNullOrEmpty()) {
+                        onSuccess(images[0].id!!)
+                    }
+                }
+
+                override fun onFailure(call: Call<ImageResponse>, t: Throwable) {
+//                        onError(t.toString())
+                }
+            })
+    }
+
     /**
      * This function gets the exercise list from network and for each exercise.id it makes a new API
      * call for the thumbnail of each exercise. It's called after the network call for exercise list.
      * TODO: figure out if forward loop is better.
      */
-    fun getThumbnailsFromNetwork(
-            exercises: List<Exercise>,
-            cache: WgerLocalCache,
-            onCallFinished: () -> Unit
-    ) {
-//        var i = 0
-//        fun forwardLoop() {
-//            if (i == exercises.size - 1) {
-//                return //loop is finished;
-//            }
-//            i++
+    private fun getThumbnailsFromNetwork(exerciseId: Int, imageId: Int) {
 
-        for (exercise in exercises) {
+        WgerService.create()
+                .getThumbnailById(imageId)
+                .enqueue(object : Callback<ThumbnailResponse> {
 
-            debug("Looking for thumbnails of exercise with id: " + exercise.id)
-            WgerService.create()
-                    .getThumbnailById(exercise.id)
-                    .enqueue(object : Callback<ThumbnailResponse> {
+                    override fun onResponse(call: Call<ThumbnailResponse>, response: Response<ThumbnailResponse>) {
+                        val thumbnail = response.body()?.thumbnail
+                        cache.updateExerciseThumbnail(exerciseId, thumbnail!!.url)
+                    }
 
-                        override fun onResponse(call: Call<ThumbnailResponse>, response: Response<ThumbnailResponse>) {
-                            val thumbnail = response.body()?.thumbnail
-                            cache.updateExercise(exercise.id, thumbnail?.url!!)
-//                            forwardLoop()
-                        }
-
-                        override fun onFailure(call: Call<ThumbnailResponse>, t: Throwable) {
-                            Log.d("WgerService - E", t.toString())
-//                            forwardLoop()
-                        }
-                    })
-        }
-
-//        forwardLoop()
-        onCallFinished()
+                    override fun onFailure(call: Call<ThumbnailResponse>, t: Throwable) {
+//                        Log.d("WgerService - E", t.toString())
+                    }
+                })
     }
 
     /**
@@ -200,21 +209,21 @@ class WgerRepository(
      * This function makes an API call for the exercise's images.
      * TODO: Implement
      */
-    private fun getExerciseImagesById(exerciseId: Int) {
-
-        WgerService.create()
-                .getImagesById(exerciseId)
-                .enqueue(object : Callback<ImageResponse> {
-                    override fun onResponse(call: Call<ImageResponse>, response: Response<ImageResponse>) {
-                        debug("Getting equipmentRows...")
-                        val imageUrls = response.body()?.results
-                    }
-
-                    override fun onFailure(call: Call<ImageResponse>, t: Throwable) {
-                        debug(t)
-                    }
-                })
-    }
+//    private fun getExerciseImagesById(exerciseId: Int) {
+//
+//        WgerService.create()
+//                .getImagesById(exerciseId)
+//                .enqueue(object : Callback<ImageResponse> {
+//                    override fun onResponse(call: Call<ImageResponse>, response: Response<ImageResponse>) {
+//                        debug("Getting equipmentRows...")
+//                        val imageUrls = response.body()?.results
+//                    }
+//
+//                    override fun onFailure(call: Call<ImageResponse>, t: Throwable) {
+//                        debug(t)
+//                    }
+//                })
+//    }
 
     companion object {
         private const val DATABASE_PAGE_SIZE = 20

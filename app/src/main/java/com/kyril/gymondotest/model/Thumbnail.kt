@@ -8,6 +8,6 @@ import com.google.gson.annotations.Expose
 data class Thumbnail(
 
     @PrimaryKey(autoGenerate = true) var id: Int,
-    @Expose val url: String? = null
+    @Expose val url: String
 
 )

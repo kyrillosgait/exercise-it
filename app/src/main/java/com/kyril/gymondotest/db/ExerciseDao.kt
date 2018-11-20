@@ -1,36 +1,29 @@
 package com.kyril.gymondotest.db
 
-import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.kyril.gymondotest.model.Category
-import com.kyril.gymondotest.model.Equipment
-import com.kyril.gymondotest.model.Exercise
-import com.kyril.gymondotest.model.Muscle
+import com.kyril.gymondotest.model.*
 
 @Dao
 interface ExerciseDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertExercises(exercises: List<Exercise>)
-
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertExercise(exercise: Exercise)
-
-    @Query("SELECT * FROM exercise")
-    fun getExercises(): LiveData<List<Exercise>>
 
     @Query("SELECT COUNT(*) FROM exercise")
     fun getExerciseRows(): Int
 
-    @Query("SELECT * FROM exercise WHERE sort_id = :sortId")
-    fun getExerciseById(sortId: Int): Exercise
+    @Query("SELECT * FROM exercise WHERE id = :exerciseId")
+    fun getExerciseById(exerciseId: Int): Exercise
 
     @Query("SELECT * FROM exercise ORDER BY sort_id")
     fun exercises(): DataSource.Factory<Int, Exercise>
+
+    @Query("UPDATE exercise SET images = :images WHERE id = :exerciseId")
+    fun updateExerciseImages(exerciseId: Int, images: List<Image>)
 
     @Query("UPDATE exercise SET thumbnail_url = :thumbnailUrl WHERE id = :exerciseId")
     fun updateExerciseThumbnail(exerciseId: Int, thumbnailUrl: String)

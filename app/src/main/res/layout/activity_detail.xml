@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/detailCoordinatorLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+                                                     xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                     android:id="@+id/detailCoordinatorLayout"
+                                                     android:layout_width="match_parent"
+                                                     android:layout_height="match_parent"
+                                                     android:fitsSystemWindows="true">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/detailToolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:theme="@style/ToolbarStyle">
@@ -169,18 +169,32 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/exerciseDescriptionLabelTextView" />
 
+            <TextView
+                android:id="@+id/exerciseImagesLabelTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/detail_images_label"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/exerciseDescriptionTextView" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/exerciseImagesRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:clipToPadding="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/exerciseImagesLabelTextView" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-
     </androidx.core.widget.NestedScrollView>
-
-    <!--<androidx.recyclerview.widget.RecyclerView-->
-    <!--android:id="@+id/exerciseImagesRecyclerView"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginTop="?attr/actionBarSize"-->
-    <!--android:clipToPadding="false"-->
-    <!--android:orientation="horizontal" />-->
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -18,4 +18,5 @@
     <string name="detail_no_muscles">No muscles info</string>
     <string name="detail_no_description">No description available</string>
     <string name="thumbnail_image_content_descrition">Exercise thumbnail</string>
+    <string name="detail_images_label">Images</string>
 </resources>
