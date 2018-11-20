@@ -107,11 +107,12 @@ class DetailActivity : AppCompatActivity() {
             exerciseEquipmentTextView.text = exercise.equipment
         }
 
+        // Also trim whitespaces in the start or in the end of the string
         if (!exercise.description.isNullOrBlank()) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                exerciseDescriptionTextView.text = Html.fromHtml(exercise.description, Html.FROM_HTML_MODE_COMPACT)
+                exerciseDescriptionTextView.text = Html.fromHtml(exercise.description, Html.FROM_HTML_MODE_COMPACT).trim()
             } else {
-                exerciseDescriptionTextView.text = Html.fromHtml(exercise.description)
+                exerciseDescriptionTextView.text = Html.fromHtml(exercise.description).trim()
             }
         }
     }
