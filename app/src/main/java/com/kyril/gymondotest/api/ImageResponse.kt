@@ -6,6 +6,7 @@ import com.kyril.gymondotest.model.Image
 
 class ImageResponse {
 
-    @Expose @SerializedName("results")
+    @Expose
+    @SerializedName("results")
     var images: List<Image> = emptyList()
 }

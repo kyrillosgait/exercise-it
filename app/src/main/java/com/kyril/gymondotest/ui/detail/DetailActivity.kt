@@ -96,8 +96,8 @@ class DetailActivity : AppCompatActivity() {
 
     private fun loadLanguageFlag(icon: Int) {
         GlideApp.with(this)
-                .load(icon)
-                .into(exerciseLanguageImageView)
+            .load(icon)
+            .into(exerciseLanguageImageView)
     }
 
 }

@@ -17,17 +17,17 @@ interface WgerService {
 
     @GET("exercise/")
     fun getExercises(
-            @Query("page") page: Int
+        @Query("page") page: Int
     ): Call<ExerciseResponse>
 
     @GET("exerciseimage/{id}/thumbnails")
     fun getThumbnailById(
-            @Path("id") exerciseId: Int
+        @Path("id") exerciseId: Int
     ): Call<ThumbnailResponse>
 
     @GET("exerciseimage/")
     fun getImagesById(
-            @Query("exercise") exerciseId: Int
+        @Query("exercise") exerciseId: Int
     ): Call<ImageResponse>
 
     @GET("exercisecategory/")
@@ -48,19 +48,19 @@ interface WgerService {
             logger.level = HttpLoggingInterceptor.Level.BODY
 
             val client = OkHttpClient.Builder()
-                    .addInterceptor(logger)
-                    .build()
+                .addInterceptor(logger)
+                .build()
 
             val gson = GsonBuilder()
-                    .excludeFieldsWithoutExposeAnnotation()
-                    .create()
+                .excludeFieldsWithoutExposeAnnotation()
+                .create()
 
             return Retrofit.Builder()
-                    .baseUrl(BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create(gson))
-                    .client(client)
-                    .build()
-                    .create(WgerService::class.java)
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .client(client)
+                .build()
+                .create(WgerService::class.java)
         }
     }
 }

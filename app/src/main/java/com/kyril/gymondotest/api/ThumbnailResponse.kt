@@ -6,6 +6,7 @@ import com.kyril.gymondotest.model.Thumbnail
 
 class ThumbnailResponse {
 
-    @Expose @SerializedName("small")
+    @Expose
+    @SerializedName("small")
     var thumbnail: Thumbnail? = null
 }

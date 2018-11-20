@@ -6,6 +6,7 @@ import com.kyril.gymondotest.model.Category
 
 class CategoryResponse {
 
-    @Expose @SerializedName("results")
+    @Expose
+    @SerializedName("results")
     var categories: List<Category> = emptyList()
 }

@@ -68,7 +68,6 @@ class WgerRepository(private val service: WgerService, private val cache: WgerLo
      * make API calls to get images and thumbnails.
      */
     fun getImagesAndThumbnails(exercises: List<Exercise>) {
-
         for (exercise in exercises) {
             getImagesFromNetwork(exercise.id) {
                 getThumbnailsFromNetwork(exercise.id, it)
@@ -80,7 +79,6 @@ class WgerRepository(private val service: WgerService, private val cache: WgerLo
 
         service.getImagesById(exerciseId)
             .enqueue(object : Callback<ImageResponse> {
-
                 override fun onResponse(call: Call<ImageResponse>, response: Response<ImageResponse>) {
                     val images = response.body()?.images
                     cache.updateExerciseImages(exerciseId, images!!)

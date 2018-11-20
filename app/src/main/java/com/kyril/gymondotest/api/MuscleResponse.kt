@@ -6,6 +6,7 @@ import com.kyril.gymondotest.model.Muscle
 
 class MuscleResponse {
 
-    @Expose @SerializedName("results")
+    @Expose
+    @SerializedName("results")
     var muscles: List<Muscle> = emptyList()
 }

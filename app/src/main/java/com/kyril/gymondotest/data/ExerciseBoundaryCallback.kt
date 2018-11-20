@@ -19,12 +19,12 @@ class ExerciseBoundaryCallback(
         const val NETWORK_PAGE_SIZE = 20
     }
 
-    // keep the last requested page. When the request is successful, increment the page number.
+    // figure out which page was last downloaded and increment the number
     private var lastRequestedPage = (cache.exerciseRows() / NETWORK_PAGE_SIZE) + 1
 
     private val _networkErrors = MutableLiveData<String>()
 
-    // LiveData of network errors.
+    // LiveData of network errors
     val networkErrors: LiveData<String>
         get() = _networkErrors
 

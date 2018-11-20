@@ -37,7 +37,7 @@ class ImageAdapter : ListAdapter<Image, ImageAdapter.ImageViewHolder>(ExerciseDi
     }
 
     class ImageViewHolder(override val containerView: View) : RecyclerView.ViewHolder(containerView),
-            LayoutContainer {
+        LayoutContainer {
 
         private val context = containerView.context
 
@@ -56,9 +56,9 @@ class ImageAdapter : ListAdapter<Image, ImageAdapter.ImageViewHolder>(ExerciseDi
             circularProgressDrawable.start()
 
             GlideApp.with(context)
-                    .load(image?.imageUrl)
-                    .placeholder(circularProgressDrawable)
-                    .into(exerciseImageImageView)
+                .load(image?.imageUrl)
+                .placeholder(circularProgressDrawable)
+                .into(exerciseImageImageView)
 
             exerciseImageStepTextView.text = "$stepLabel $stepNumber"
 

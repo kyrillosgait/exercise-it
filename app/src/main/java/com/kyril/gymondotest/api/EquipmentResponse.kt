@@ -6,6 +6,7 @@ import com.kyril.gymondotest.model.Equipment
 
 class EquipmentResponse {
 
-    @Expose @SerializedName("results")
+    @Expose
+    @SerializedName("results")
     var equipment: List<Equipment> = emptyList()
 }

@@ -9,7 +9,8 @@ import com.kyril.gymondotest.model.Exercise
  */
 class ExerciseResponse {
 
-    @Expose @SerializedName("results")
+    @Expose
+    @SerializedName("results")
     var exercises: List<Exercise> = emptyList()
 
 }
