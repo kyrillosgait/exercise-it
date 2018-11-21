@@ -1,5 +1,5 @@
 # ExerciseIt
-[![N|ExerciseIt](https://github.com/kyrillosgait/exercise-it/blob/master/screenshots/ic.png)]
+![N|ExerciseIt](https://github.com/kyrillosgait/exercise-it/blob/master/screenshots/ic.png)
 
 ExerciseIt is an app that consumes Wger API and shows the exercises to the user.
 
