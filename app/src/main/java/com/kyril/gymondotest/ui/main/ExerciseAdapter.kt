@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.kyril.gymondotest.R
 import com.kyril.gymondotest.model.Exercise
-import com.kyril.gymondotest.ui.GlideApp
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.exercise_list_item.*
 
@@ -69,7 +68,7 @@ class ExerciseAdapter(
                 // Load image
                 if (exercise.thumbnailUrl.isNullOrBlank()) {
                     GlideApp.with(context)
-                        .load(R.drawable.ic_fitness)
+                        .load(R.drawable.ic_exercise_placeholder)
                         .into(exerciseThumbnailImageView)
                 } else {
                     circularProgressDrawable.strokeWidth = 5f

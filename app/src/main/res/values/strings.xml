@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Gymondo Test</string>
+    <string name="app_name">ExerciseIt</string>
     <string name="main_toolbar_title">Exercises</string>
     <string name="detail_language_image_view_content_description">Language flag</string>
     <string name="detail_category_label">Category</string>

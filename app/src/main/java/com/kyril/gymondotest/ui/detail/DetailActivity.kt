@@ -36,7 +36,6 @@ class DetailActivity : AppCompatActivity() {
      * Adds language flag as action bar icon to the toolbar depending on the exercise's language
      */
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-
         when (exercise.languageId) {
             1 -> addFlagToActionBar(menu, R.drawable.ic_german)
             2 -> addFlagToActionBar(menu, R.drawable.ic_english)
@@ -50,7 +49,6 @@ class DetailActivity : AppCompatActivity() {
             10 -> addFlagToActionBar(menu, R.drawable.ic_swedish)
             11 -> addFlagToActionBar(menu, R.drawable.ic_norwegian)
         }
-
         return true
     }
 
@@ -59,7 +57,6 @@ class DetailActivity : AppCompatActivity() {
                 .setIcon(languageFlag)
                 .setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
     }
-
 
     private fun setUpToolbar() {
         setSupportActionBar(detailToolbar)
